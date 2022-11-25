@@ -1,3 +1,3 @@
 rootProject.name = "clients"
 
-include(":api:paper")
+include(":api:minestom")
