@@ -18,6 +18,7 @@ import net.minestom.server.command.builder.exception.ArgumentSyntaxException
  *
  * @return the built command
  */
+@DslAnnotations.TopLevel.CommandDsl
 inline fun command(names: List<String>, crossinline builder: CommandBuilder.() -> Unit): Command =
     CommandBuilder(names).apply(builder).also {
         commandManager.register(it)
@@ -29,12 +30,14 @@ inline fun command(names: List<String>, crossinline builder: CommandBuilder.() -
  * Extends the Minestom [Command]
  * @param names the names of the command, containing the aliases (first entry is name)
  */
+@DslAnnotations.TopLevel.CommandDsl
 class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(names).removeFirst().toTypedArray()) {
 
     /**
      * Sets the default response without any arguments or on an error
      * @param runs the block to configure the callback
      */
+    @DslAnnotations.NodeLevel.DefaultDsl
     inline fun default(crossinline runs: CommandExecutor.() -> Unit) =
         setDefaultExecutor { sender, context -> runs(CommandExecutor(sender, context)) }
 
@@ -43,6 +46,7 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * @param argument the callback's argument
      * @param exception the exception builder of the argument
      */
+    @DslAnnotations.NodeLevel.CallbackDsl
     inline fun argumentCallbacks(
         argument: Argument<*>, crossinline exception: ArgumentCallback.() -> Unit
     ) = setArgumentCallback(
@@ -54,6 +58,7 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * @param argument the arguments of the syntax
      * @param syntax the syntax builder
      */
+    @DslAnnotations.NodeLevel.SyntaxDsl
     inline fun syntax(
         argument: Argument<*>, crossinline syntax: CommandExecutor.() -> Unit
     ) {
@@ -66,6 +71,7 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * @param arguments the arguments of the syntax
      * @param syntax the syntax builder
      */
+    @DslAnnotations.NodeLevel.SyntaxDsl
     inline fun syntax(
         arguments: List<Argument<*>>, crossinline syntax: CommandExecutor.() -> Unit
     ) {
@@ -78,6 +84,7 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * @param condition the condition the sender has to reach
      * @param syntax the syntax builder
      */
+    @DslAnnotations.NodeLevel.SyntaxDsl
     inline fun conditionalSyntax(
         arguments: List<Argument<*>>,
         crossinline condition: SyntaxCondition.() -> Boolean,
@@ -94,6 +101,7 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * Sets the condition of the command
      * @param condition the [CommandCondition]
      */
+    @DslAnnotations.TopLevel.CommandDsl
     fun condition(condition: CommandCondition) = setCondition(condition)
 
     /**
@@ -101,6 +109,7 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * @param names the names of the command, containing the aliases (first entry is name)
      * @param builder the [CommandBuilder] block
      */
+    @DslAnnotations.TopLevel.CommandDsl
     inline fun subCommand(names: List<String>, crossinline builder: CommandBuilder.() -> Unit) =
         addSubcommand(CommandBuilder(names).apply(builder))
 }
@@ -108,3 +117,22 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
 class CommandExecutor(val sender: CommandSender, val context: CommandContext)
 class ArgumentCallback(val sender: CommandSender, val exception: ArgumentSyntaxException)
 class SyntaxCondition(val sender: CommandSender, val commandString: String?)
+
+private class DslAnnotations {
+    class TopLevel {
+        @Target(AnnotationTarget.FUNCTION, AnnotationTarget.TYPE, AnnotationTarget.CLASS)
+        @DslMarker
+        annotation class CommandDsl
+    }
+
+    class NodeLevel {
+        @DslMarker
+        annotation class SyntaxDsl
+
+        @DslMarker
+        annotation class DefaultDsl
+
+        @DslMarker
+        annotation class CallbackDsl
+    }
+}
