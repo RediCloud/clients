@@ -3,6 +3,10 @@ plugins {
     `minestom-script`
 }
 
+dependencies {
+    implementation(project(":api:shared"))
+}
+
 tasks {
     jar {
         manifest {

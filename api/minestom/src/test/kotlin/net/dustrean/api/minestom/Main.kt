@@ -2,7 +2,9 @@ package net.dustrean.api.minestom
 
 import net.dustrean.api.minestom.events.listenEvent
 import net.minestom.server.coordinate.Pos
+import net.minestom.server.entity.PlayerSkin
 import net.minestom.server.event.player.PlayerLoginEvent
+import net.minestom.server.event.player.PlayerSkinInitEvent
 import net.minestom.server.instance.block.Block
 
 fun main() {
