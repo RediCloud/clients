@@ -6,6 +6,6 @@ import net.minestom.server.event.player.PlayerSkinInitEvent
 
 object SkinProvider {
     val skinInit = listenEvent<PlayerSkinInitEvent> {
-        it.skin = PlayerSkin.fromUsername(it.player.username)
+        skin = PlayerSkin.fromUsername(player.username)
     }
 }
