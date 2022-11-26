@@ -35,8 +35,8 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * Sets the default response without any arguments or on an error
      * @param runs the block to configure the callback
      */
-    inline fun default(crossinline runs: (sender: CommandSender, context: CommandContext) -> Unit) =
-        setDefaultExecutor { sender, context -> runs(sender, context) }
+    inline fun default(crossinline runs: CommandExecutor.() -> Unit) =
+        setDefaultExecutor { sender, context -> runs(CommandExecutor(sender, context)) }
 
     /**
      * Builds the customized callback of an argument
@@ -44,9 +44,10 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * @param exception the exception builder of the argument
      */
     inline fun argumentCallbacks(
-        argument: Argument<*>,
-        crossinline exception: (sender: CommandSender, exception: ArgumentSyntaxException) -> Unit
-    ) = setArgumentCallback({ sender, argumentException -> exception(sender, argumentException) }, argument)
+        argument: Argument<*>, crossinline exception: ArgumentCallback.() -> Unit
+    ) = setArgumentCallback(
+        { sender, argumentException -> exception(ArgumentCallback(sender, argumentException)) }, argument
+    )
 
     /**
      * Builds the syntax for the given argument
@@ -54,9 +55,9 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * @param syntax the syntax builder
      */
     inline fun syntax(
-        argument: Argument<*>, crossinline syntax: (sender: CommandSender, context: CommandContext) -> Unit
+        argument: Argument<*>, crossinline syntax: CommandExecutor.() -> Unit
     ) {
-        addSyntax({ sender, context -> syntax(sender, context) }, argument)
+        addSyntax({ sender, context -> syntax(CommandExecutor(sender, context)) }, argument)
     }
 
 
@@ -66,9 +67,9 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      * @param syntax the syntax builder
      */
     inline fun syntax(
-        arguments: List<Argument<*>>, crossinline syntax: (sender: CommandSender, context: CommandContext) -> Unit
+        arguments: List<Argument<*>>, crossinline syntax: CommandExecutor.() -> Unit
     ) {
-        addSyntax({ sender, context -> syntax(sender, context) }, *arguments.toTypedArray())
+        addSyntax({ sender, context -> syntax(CommandExecutor(sender, context)) }, *arguments.toTypedArray())
     }
 
     /**
@@ -79,12 +80,12 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
      */
     inline fun conditionalSyntax(
         arguments: List<Argument<*>>,
-        crossinline condition: (sender: CommandSender, commandString: String?) -> Boolean,
-        crossinline syntax: (sender: CommandSender, context: CommandContext) -> Unit
+        crossinline condition: SyntaxCondition.() -> Boolean,
+        crossinline syntax: CommandExecutor.() -> Unit
     ) {
         addConditionalSyntax(
-            { sender, string -> condition(sender, string) },
-            { sender, context -> syntax(sender, context) },
+            { sender, string -> condition(SyntaxCondition(sender, string)) },
+            { sender, context -> syntax(CommandExecutor(sender, context)) },
             *arguments.toTypedArray()
         )
     }
@@ -103,3 +104,7 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
     inline fun subCommand(names: List<String>, crossinline builder: CommandBuilder.() -> Unit) =
         addSubcommand(CommandBuilder(names).apply(builder))
 }
+
+class CommandExecutor(val sender: CommandSender, val context: CommandContext)
+class ArgumentCallback(val sender: CommandSender, val exception: ArgumentSyntaxException)
+class SyntaxCondition(val sender: CommandSender, val commandString: String?)
