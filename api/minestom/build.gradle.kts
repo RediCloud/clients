@@ -1,9 +1,16 @@
 plugins {
-    application
     `kotlin-script`
     `minestom-script`
 }
 
-application {
-    mainClass.set("net.dustrean.api.minestom.MainKt")
+tasks {
+    jar {
+        manifest {
+            attributes(
+                mapOf(
+                    "Main-Class" to "net.dustrean.api.minestom.MinestomMainKt", "Manifest-Version" to "1.0"
+                )
+            )
+        }
+    }
 }
