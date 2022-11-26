@@ -49,6 +49,18 @@ class CommandBuilder(names: List<String>) : Command(names.first(), *arrayListOf(
     ) = setArgumentCallback({ sender, argumentException -> exception(sender, argumentException) }, argument)
 
     /**
+     * Builds the syntax for the given argument
+     * @param argument the arguments of the syntax
+     * @param syntax the syntax builder
+     */
+    inline fun syntax(
+        argument: Argument<*>, crossinline syntax: (sender: CommandSender, context: CommandContext) -> Unit
+    ) {
+        addSyntax({ sender, context -> syntax(sender, context) }, argument)
+    }
+
+
+    /**
      * Builds the syntax for the arguments in the list
      * @param arguments the arguments of the syntax
      * @param syntax the syntax builder
