@@ -10,10 +10,11 @@ val commandManager = MinecraftServer.getCommandManager()
 val instanceManager = MinecraftServer.getInstanceManager()
 val packetListenerManager = MinecraftServer.getPacketListenerManager()
 val packetProcessor = MinecraftServer.getPacketProcessor()
-val connectionmanager = MinecraftServer.getConnectionManager()
+val connectionManager = MinecraftServer.getConnectionManager()
+val extensionManager = MinecraftServer.getExtensionManager()
 
 val onlinePlayers
-    get() = connectionmanager.onlinePlayers
+    get() = connectionManager.onlinePlayers.toList()
 
 fun Collection<Player>.sendPacket(packet: SendablePacket) = forEach {
     it.sendPacket(packet)
