@@ -1,6 +1,5 @@
 package net.dustrean.api.minestom
 
-import net.dustrean.api.minestom.commands.FlyCommand
 import net.dustrean.api.minestom.events.listenEvent
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.event.player.PlayerLoginEvent
@@ -19,5 +18,6 @@ fun main() {
         it.player.respawnPoint = Pos(200.0, 50.0, 200.0)
     }
 
-    commandManager.register(FlyCommand())
+    testCommand
+    flyCommand
 }
