@@ -1,6 +1,7 @@
 package net.dustrean.api.minestom.item
 
 import net.dustrean.api.minestom.eventHandler
+import net.dustrean.api.minestom.events.eventNode
 import net.dustrean.api.minestom.item.enums.InteractType
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
@@ -15,7 +16,7 @@ import java.util.*
 
 class ItemEvents {
     init {
-        val node = EventNode.type("item_events", EventFilter.ALL).apply {
+        eventNode("item_events", EventFilter.ALL) {
             addListener(PlayerStartDiggingEvent::class.java) l@{
                 if (it.player.itemInMainHand.hasTag(ItemConstants.tag)) {
                     val item = Constants.items[it.player.itemInMainHand.getTag(ItemConstants.tag)] ?: return@l
@@ -65,6 +66,5 @@ class ItemEvents {
                 }
             }
         }
-        eventHandler.addChild(node)
     }
 }
