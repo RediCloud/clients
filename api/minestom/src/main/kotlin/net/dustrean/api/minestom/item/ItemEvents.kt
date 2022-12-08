@@ -2,6 +2,7 @@ package net.dustrean.api.minestom.item
 
 import net.dustrean.api.minestom.eventHandler
 import net.dustrean.api.minestom.events.eventNode
+import net.dustrean.api.minestom.events.listenEvent
 import net.dustrean.api.minestom.item.enums.InteractType
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
@@ -17,51 +18,51 @@ import java.util.*
 class ItemEvents {
     init {
         eventNode("item_events", EventFilter.ALL) {
-            addListener(PlayerStartDiggingEvent::class.java) l@{
-                if (it.player.itemInMainHand.hasTag(ItemConstants.tag)) {
-                    val item = Constants.items[it.player.itemInMainHand.getTag(ItemConstants.tag)] ?: return@l
-                    it.isCancelled = item.blockInteract
-                    item.interactHandler?.invoke(item, it.player.uuid, Optional.of(InteractType.LEFT_CLICK_BLOCK))
+            listenEvent<PlayerStartDiggingEvent> l@{
+                if (player.itemInMainHand.hasTag(ItemConstants.tag)) {
+                    val item = Constants.items[player.itemInMainHand.getTag(ItemConstants.tag)] ?: return@l
+                    isCancelled = item.blockInteract
+                    item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.LEFT_CLICK_BLOCK))
                 }
             }
-            addListener(PlayerUseItemEvent::class.java) l@{
-                if (it.itemStack.hasTag(ItemConstants.tag)) {
-                    val item: ItemStack = Constants.items[it.itemStack.getTag(ItemConstants.tag)] ?: return@l
-                    it.isCancelled = item.blockInteract
-                    item.interactHandler?.invoke(item, it.player.uuid, Optional.of(InteractType.RIGHT_CLICK_AIR))
+            listenEvent<PlayerUseItemEvent> l@{
+                if (itemStack.hasTag(ItemConstants.tag)) {
+                    val item: ItemStack = Constants.items[itemStack.getTag(ItemConstants.tag)] ?: return@l
+                    isCancelled = item.blockInteract
+                    item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.RIGHT_CLICK_AIR))
                 }
             }
-            addListener(PlayerBlockPlaceEvent::class.java) {
-                it.player.inventory.getItemInHand(it.hand).getTag(ItemConstants.tag)?.let { tag ->
+            listenEvent<PlayerBlockPlaceEvent> {
+                player.inventory.getItemInHand(hand).getTag(ItemConstants.tag)?.let { tag ->
                     val item: ItemStack = Constants.items[tag] ?: return@let
-                    it.isCancelled = item.blockInteract
-                    item.interactHandler?.invoke(item, it.player.uuid, Optional.of(InteractType.RIGHT_CLICK_BLOCK))
+                    isCancelled = item.blockInteract
+                    item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.RIGHT_CLICK_BLOCK))
                 }
             }
-            addListener(ItemDropEvent::class.java) l@{
-                if (it.itemStack.hasTag(ItemConstants.tag)) {
-                    val item: ItemStack = Constants.items[it.itemStack.getTag(ItemConstants.tag)] ?: return@l
-                    it.isCancelled = item.blockDrop
-                    item.dropHandler?.invoke(item, it.player.uuid)
+            listenEvent<ItemDropEvent> l@{
+                if (itemStack.hasTag(ItemConstants.tag)) {
+                    val item: ItemStack = Constants.items[itemStack.getTag(ItemConstants.tag)] ?: return@l
+                    isCancelled = item.blockDrop
+                    item.dropHandler?.invoke(item, player.uuid)
                 }
             }
-            addListener(InventoryPreClickEvent::class.java) l@{
-                mutableListOf(it.cursorItem, it.clickedItem).forEach { itemStack ->
+            listenEvent<InventoryPreClickEvent> l@{
+                mutableListOf(cursorItem, clickedItem).forEach { itemStack ->
                     if (itemStack.hasTag(ItemConstants.tag)) {
                         val item: ItemStack = Constants.items[itemStack.getTag(ItemConstants.tag)] ?: return@l
-                        it.isCancelled = item.blockClick
-                        item.clickHandler?.invoke(item, it.player.uuid)
+                        isCancelled = item.blockClick
+                        item.clickHandler?.invoke(item, player.uuid)
                     }
                 }
             }
-            addListener(PlayerSwapItemEvent::class.java) l@{
+            listenEvent<PlayerSwapItemEvent> l@{
                 mutableListOf(
-                    it.mainHandItem, it.offHandItem
+                    mainHandItem, offHandItem
                 ).forEach { itemStack ->
                     if (itemStack.hasTag(ItemConstants.tag)) {
                         val item: ItemStack = Constants.items[itemStack.getTag(ItemConstants.tag)] ?: return@l
-                        it.isCancelled = item.blockClick
-                        item.clickHandler?.invoke(item, it.player.uuid)
+                        isCancelled = item.blockClick
+                        item.clickHandler?.invoke(item, player.uuid)
                     }
                 }
             }

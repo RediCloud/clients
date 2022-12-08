@@ -9,6 +9,10 @@ inline fun <reified T : Event> listenEvent(crossinline block: T.() -> Unit) {
     eventHandler.addListener(T::class.java) { block(it) }
 }
 
+inline fun <reified T : Event> EventNode<T>.listenEvent(crossinline block: T.() -> Unit) {
+    addListener(T::class.java) { block(it) }
+}
+
 inline fun <reified T : Event> eventNode(name: String, filter: EventFilter<T, *>, crossinline block: EventNode<T>.() -> Unit) {
     eventHandler.addChild(EventNode.type(name, filter).apply(block))
 }
