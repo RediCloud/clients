@@ -1,5 +1,6 @@
 package net.dustrean.api.minestom.item
 
+import net.dustrean.api.minestom.eventHandler
 import net.dustrean.api.minestom.item.enums.InteractType
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode
@@ -64,5 +65,6 @@ class ItemEvents {
                 }
             }
         }
+        eventHandler.addChild(node)
     }
 }
