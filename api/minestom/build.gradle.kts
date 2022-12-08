@@ -2,19 +2,12 @@ plugins {
     `kotlin-script`
     `minestom-script`
 }
+apply(plugin = "net.dustrean.libloader")
+
+the(net.dustrean.libloader.plugin.LibraryLoader.LibraryLoaderConfig::class).apply {
+    this.mainClass.set("net.dustrean.api.minestom.MinestomMainKt")
+}
 
 dependencies {
     implementation(project(":api:shared"))
-}
-
-tasks {
-    jar {
-        manifest {
-            attributes(
-                mapOf(
-                    "Main-Class" to "net.dustrean.api.minestom.MinestomMainKt", "Manifest-Version" to "1.0"
-                )
-            )
-        }
-    }
 }
