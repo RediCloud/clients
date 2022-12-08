@@ -9,7 +9,7 @@ inline fun <reified T : Event> listenEvent(crossinline block: T.() -> Unit) {
     eventHandler.addListener(T::class.java) { block(it) }
 }
 
-inline fun <reified T : Event> EventNode<Event>.nodeListenEvent(crossinline block: T.() -> Unit) {
+inline fun <reified T : Event> EventNode<Event>.listen(crossinline block: T.() -> Unit) {
     addListener(T::class.java) { block(it) }
 }
 
