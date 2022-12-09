@@ -10,6 +10,7 @@ configurations.compileClasspath.get().extendsFrom(lib)
 
 the(LibraryLoader.LibraryLoaderConfig::class).apply {
     configurationName.set("lib")
+    doBootstrapShade.set(false)
 }
 
 repositories {
