@@ -1,6 +1,7 @@
 plugins {
     `kotlin-script`
     `minestom-script`
+    `core-script`
 }
 apply(plugin = "net.dustrean.libloader")
 

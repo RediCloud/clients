@@ -2,6 +2,7 @@ import net.dustrean.libloader.plugin.LibraryLoader
 
 plugins {
     `kotlin-script`
+    `core-script`
 }
 apply(plugin = "net.dustrean.libloader")
 

@@ -1,0 +1,22 @@
+import org.gradle.authentication.http.BasicAuthentication
+import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.repositories
+
+repositories {
+    maven {
+        url = uri("https://repo.dustrean.net/${
+            if (BuildConstants.coreVersion.endsWith("-SNAPSHOT")) "snapshots" else "releases"
+        }")
+        authentication.create<BasicAuthentication>("basic")
+        credentials {
+            username = (findProperty("DUSTREAN_REPO_USERNAME") as String?) ?: System.getenv("DUSTREAN_REPO_USERNAME")
+            password = (findProperty("DUSTREAN_REPO_PASSWORD") as String?) ?: System.getenv("DUSTREAN_REPO_PASSWORD")
+        }
+    }
+}
+afterEvaluate {
+    dependencies {
+        add("compileOnly", "net.dustrean.api:api:${BuildConstants.coreVersion}")
+        add("compileOnly", "net.dustrean.api:api-cloud:${BuildConstants.coreVersion}")
+    }
+}
