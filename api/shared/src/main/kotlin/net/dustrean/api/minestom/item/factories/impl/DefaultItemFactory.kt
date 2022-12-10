@@ -10,6 +10,7 @@ import net.dustrean.api.minestom.item.factories.ItemFactory
 import net.kyori.adventure.text.Component
 import java.util.*
 
+@Suppress("MemberVisibilityCanBePrivate")
 class DefaultItemFactory(
     var material: Material
 ) : ItemFactory, ItemStackLike {
@@ -21,6 +22,16 @@ class DefaultItemFactory(
     var blockDrop: Boolean = false
     var blockInteract: Boolean = false
     var blockClick: Boolean = false
+
+
+    var blockAll: Boolean = false
+        set(value) {
+            blockDrop = value
+            blockInteract = value
+            blockClick = value
+            field = value
+        }
+
     var dropHandler: ((ItemStack, UUID) -> Unit)? = null
     var interactHandler: ((ItemStack, UUID, Optional<InteractType>) -> Unit)? = null
     var clickHandler: ((ItemStack, UUID) -> Unit)? = null
@@ -54,7 +65,7 @@ class DefaultItemFactory(
             blockDrop,
             blockInteract,
             blockClick,
-            uuid, // TODO()
+            uuid,
             dropHandler,
             interactHandler,
             clickHandler,
