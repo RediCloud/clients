@@ -1,9 +1,9 @@
 package net.dustrean.api.minestom.item
 
-import net.dustrean.api.minestom.item.Constants.register
 import net.dustrean.api.minestom.item.enums.Material
-import net.kyori.adventure.key.Key
+import net.minestom.server.entity.Player
 import net.minestom.server.entity.PlayerSkin
+import net.minestom.server.inventory.AbstractInventory
 import net.minestom.server.item.ItemMeta
 import net.minestom.server.item.metadata.PlayerHeadMeta
 import net.minestom.server.tag.Tag
@@ -41,4 +41,13 @@ object ItemConstants {
         }.set(tag, identifier).build()
         return itemStack
     }
+
+    fun AbstractInventory.setItemStack(slot: Int, itemStack: ItemStack) {
+        setItemStack(slot, itemStack.toMinestomItemStack())
+    }
+
+    fun Player.setItemStack(slot: Int, itemStack: ItemStackLike) {
+        inventory.setItemStack(slot, itemStack.get(uuid))
+    }
+
 }
