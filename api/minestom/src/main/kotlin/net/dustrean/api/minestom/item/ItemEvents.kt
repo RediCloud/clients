@@ -6,10 +6,8 @@ import net.dustrean.api.minestom.item.enums.InteractType
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.inventory.InventoryPreClickEvent
 import net.minestom.server.event.item.ItemDropEvent
-import net.minestom.server.event.player.PlayerBlockPlaceEvent
-import net.minestom.server.event.player.PlayerStartDiggingEvent
-import net.minestom.server.event.player.PlayerSwapItemEvent
-import net.minestom.server.event.player.PlayerUseItemEvent
+import net.minestom.server.event.player.*
+import net.minestom.server.utils.block.BlockIterator
 import java.util.*
 
 class ItemEvents {
@@ -61,6 +59,26 @@ class ItemEvents {
                         isCancelled = item.blockClick
                         item.clickHandler?.invoke(item, player.uuid)
                     }
+                }
+            }
+            listen<PlayerHandAnimationEvent> l@{
+                val itemStack =
+                    player.itemInMainHand.takeUnless { it.isAir || it.getTag(ItemConstants.tag) == null } ?: return@l
+                try {
+                    BlockIterator(
+                        this.player, 5
+                    ).forEachRemaining {
+                        if (player.instance?.getBlock(it)?.isAir == false || player.instance?.getNearbyEntities(it, 0.2)
+                                ?.isEmpty() == false
+                        ) throw IllegalAccessException()
+                    }
+                } catch (e: IllegalAccessException) {
+                    return@l
+                }
+                itemStack.getTag(ItemConstants.tag)?.let { tag ->
+                    val item: ItemStack = Constants.items[tag] ?: return@l
+                    isCancelled = item.blockInteract
+                    item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.LEFT_CLICK_AIR))
                 }
             }
         }
