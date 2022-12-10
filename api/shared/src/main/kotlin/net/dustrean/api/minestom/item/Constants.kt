@@ -11,6 +11,7 @@ object Constants {
         items.putIfAbsent(uuid, this) ?: return
         throw IllegalArgumentException("UUID already exists")
     }
+
     fun item(material: Material, apply: DefaultItemFactory.() -> Unit): ItemStack {
         return DefaultItemFactory(material).apply(apply).create()
             .get(null) // null because we don't need a player for customization.

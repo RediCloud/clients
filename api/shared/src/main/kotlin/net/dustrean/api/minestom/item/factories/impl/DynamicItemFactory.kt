@@ -10,7 +10,7 @@ import net.dustrean.api.minestom.item.factories.ItemFactory
 import net.kyori.adventure.text.Component
 import java.util.*
 
-class DynamicItemFactory(var material: (UUID?) -> Material): ItemFactory, ItemStackLike {
+class DynamicItemFactory(var material: (UUID?) -> Material) : ItemFactory, ItemStackLike {
     var name: (UUID?) -> Component? = { null }
     var amount: (UUID?) -> Int = { 1 }
     var damage: (UUID?) -> Int = { 0 }

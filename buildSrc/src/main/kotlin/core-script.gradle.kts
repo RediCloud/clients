@@ -1,12 +1,10 @@
-import org.gradle.authentication.http.BasicAuthentication
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.repositories
-
 repositories {
     maven {
-        url = uri("https://repo.dustrean.net/${
-            if (BuildConstants.coreVersion.endsWith("-SNAPSHOT")) "snapshots" else "releases"
-        }")
+        url = uri(
+            "https://repo.dustrean.net/${
+                if (BuildConstants.coreVersion.endsWith("-SNAPSHOT")) "snapshots" else "releases"
+            }"
+        )
         authentication.create<BasicAuthentication>("basic")
         credentials {
             username = (findProperty("DUSTREAN_REPO_USERNAME") as String?) ?: System.getenv("DUSTREAN_REPO_USERNAME")
