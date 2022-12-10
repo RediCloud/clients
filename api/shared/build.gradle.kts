@@ -2,6 +2,7 @@ import net.dustrean.libloader.plugin.LibraryLoader
 
 plugins {
     `kotlin-script`
+    `core-script`
 }
 apply(plugin = "net.dustrean.libloader")
 
@@ -10,6 +11,7 @@ configurations.compileClasspath.get().extendsFrom(lib)
 
 the(LibraryLoader.LibraryLoaderConfig::class).apply {
     configurationName.set("lib")
+    doBootstrapShade.set(false)
 }
 
 repositories {

@@ -1,5 +1,5 @@
 object BuildConstants {
-    const val coreVersion = "1.0.0"
+    const val coreVersion = "1.0.0-SNAPSHOT"
 
     const val coroutinesVersion = "1.6.4"
 

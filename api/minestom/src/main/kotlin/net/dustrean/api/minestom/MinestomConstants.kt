@@ -3,6 +3,7 @@ package net.dustrean.api.minestom
 import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
 import net.minestom.server.network.packet.server.SendablePacket
+import java.util.*
 
 val server = MinecraftServer.init()
 val eventHandler = MinecraftServer.getGlobalEventHandler()
@@ -19,3 +20,5 @@ val onlinePlayers
 fun Collection<Player>.sendPacket(packet: SendablePacket) = forEach {
     it.sendPacket(packet)
 }
+
+fun UUID.getPlayer() = connectionManager.getPlayer(this)
