@@ -1,4 +1,4 @@
-package net.dustrean.api.minestom.item
+package net.dustrean.api.item
 
 import java.util.*
 

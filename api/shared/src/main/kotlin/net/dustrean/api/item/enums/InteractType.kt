@@ -1,4 +1,4 @@
-package net.dustrean.api.minestom.item.enums
+package net.dustrean.api.item.enums
 
 
 enum class InteractType {

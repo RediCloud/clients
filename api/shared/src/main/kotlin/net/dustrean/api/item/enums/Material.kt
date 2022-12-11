@@ -1,6 +1,6 @@
 @file:Suppress("unused", "SpellCheckingInspection")
 
-package net.dustrean.api.minestom.item.enums
+package net.dustrean.api.item.enums
 
 enum class Material(val id: Int) {
     AIR(0),

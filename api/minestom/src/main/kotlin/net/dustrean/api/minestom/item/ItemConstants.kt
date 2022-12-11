@@ -1,6 +1,8 @@
 package net.dustrean.api.minestom.item
 
-import net.dustrean.api.minestom.item.enums.Material
+import net.dustrean.api.item.ItemStack
+import net.dustrean.api.item.ItemStackLike
+import net.dustrean.api.item.enums.Material
 import net.minestom.server.entity.Player
 import net.minestom.server.entity.PlayerSkin
 import net.minestom.server.inventory.AbstractInventory
@@ -24,7 +26,7 @@ object ItemConstants {
             MinestomMaterial.fromId(material.id) ?: throw NullPointerException("Invalid Item ID")
         ).amount(amount).lore(lore).displayName(name).apply {
             if (material == Material.PLAYER_HEAD)
-                meta(PlayerHeadMeta.Builder().apply {
+                meta(PlayerHeadMeta.Builder().apply am@{
                     applyData()
                     skullOwner(skullOwner ?: UUID.randomUUID()) //required when not set, but textureURL is set
                     playerSkin(
@@ -33,7 +35,7 @@ object ItemConstants {
                                 this@toMinestomItemStack.skullTexture,
                                 ""
                             )
-                        else PlayerSkin.fromUuid(skullOwner?.toString() ?: return@apply)
+                        else PlayerSkin.fromUuid(skullOwner?.toString() ?: return@am)
                     )
                 }.build())
             else meta {
@@ -50,5 +52,4 @@ object ItemConstants {
     fun Player.setItemStack(slot: Int, itemStack: ItemStackLike) {
         inventory.setItemStack(slot, itemStack.get(uuid))
     }
-
 }
