@@ -1,4 +1,4 @@
-package net.dustrean.api.minestom.item.factories
+package net.dustrean.api.item.factories
 
 import net.dustrean.api.minestom.item.ItemStackLike
 

@@ -1,7 +1,7 @@
-package net.dustrean.api.minestom.item
+package net.dustrean.api.item
 
-import net.dustrean.api.minestom.item.enums.InteractType
-import net.dustrean.api.minestom.item.enums.Material
+import net.dustrean.api.item.enums.InteractType
+import net.dustrean.api.item.enums.Material
 import net.kyori.adventure.text.Component
 import java.util.*
 

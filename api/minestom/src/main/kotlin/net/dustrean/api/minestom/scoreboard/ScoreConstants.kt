@@ -1,6 +1,6 @@
 package net.dustrean.api.minestom.scoreboard
 
-import net.dustrean.api.minestom.scoreboard.factories.ScoreboardFactory
+import net.dustrean.api.scoreboard.factories.ScoreboardFactory
 
 object ScoreConstants {
     fun ScoreboardFactory.minestom(): MinestomScoreboard =

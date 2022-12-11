@@ -1,4 +1,4 @@
-package net.dustrean.api.minestom.scoreboard
+package net.dustrean.api.scoreboard
 
 import net.kyori.adventure.text.Component
 import java.util.*

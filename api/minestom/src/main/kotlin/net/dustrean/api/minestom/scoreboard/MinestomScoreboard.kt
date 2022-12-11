@@ -1,6 +1,12 @@
 package net.dustrean.api.minestom.scoreboard
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
 import net.dustrean.api.minestom.getPlayer
+import net.dustrean.api.scoreboard.Scoreboard
+import net.dustrean.api.scoreboard.ScoreboardLine
 import net.kyori.adventure.text.Component
 import java.util.*
 import net.minestom.server.scoreboard.Sidebar as MinestomSidebar
@@ -9,8 +15,7 @@ import net.minestom.server.scoreboard.Sidebar.ScoreboardLine as MinestomLine
 class MinestomScoreboard(
     override var title: (UUID) -> Component,
     override val lines: MutableMap<String, ScoreboardLine>
-) :
-    Scoreboard {
+) : Scoreboard {
     var scoreboard: MutableMap<UUID, MinestomSidebar> = mutableMapOf()
     override fun addLine(line: ScoreboardLine) {
         lines.putIfAbsent(line.name, line) ?: return
@@ -26,14 +31,13 @@ class MinestomScoreboard(
             scoreboard[player]?.viewers?.clear()
         }
         scoreboard[player] = MinestomSidebar(title(player)).apply {
-            this@MinestomScoreboard.lines.forEach { (name, it) ->
+            this@MinestomScoreboard.lines.forEach { (_, it) ->
                 val newIt = if (it.proceed != null) {
                     it.clone().apply {
                         it.proceed!!(this, player)
                     }
-                } else {
-                    it
-                }
+                } else it
+
                 createLine(
                     MinestomLine(
                         newIt.name,

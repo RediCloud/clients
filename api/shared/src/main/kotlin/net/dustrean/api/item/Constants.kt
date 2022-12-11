@@ -1,4 +1,4 @@
-package net.dustrean.api.minestom.item
+package net.dustrean.api.item
 
 import net.dustrean.api.minestom.item.enums.Material
 import net.dustrean.api.minestom.item.factories.impl.DefaultItemFactory

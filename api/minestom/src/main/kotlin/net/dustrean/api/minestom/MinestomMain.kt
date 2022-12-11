@@ -1,7 +1,7 @@
 package net.dustrean.api.minestom
 
 import net.dustrean.api.minestom.item.ItemEvents
-import net.dustrean.api.minestom.utils.env
+import net.dustrean.api.utils.env
 import net.minestom.server.extras.MojangAuth
 import net.minestom.server.extras.optifine.OptifineSupport
 import net.minestom.server.extras.velocity.VelocityProxy

@@ -1,4 +1,4 @@
-package net.dustrean.api.minestom.component
+package net.dustrean.api.component
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent

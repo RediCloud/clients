@@ -1,6 +1,6 @@
-package net.dustrean.api.minestom.scoreboard.factories
+package net.dustrean.api.scoreboard.factories
 
-import net.dustrean.api.minestom.scoreboard.ScoreboardLine
+import net.dustrean.api.scoreboard.ScoreboardLine
 import net.kyori.adventure.text.Component
 import java.util.*
 
