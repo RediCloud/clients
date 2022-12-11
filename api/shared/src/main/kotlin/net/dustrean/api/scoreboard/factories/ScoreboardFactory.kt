@@ -21,7 +21,12 @@ class ScoreboardFactory {
             this.content = Component.empty()
         }
 
-    inline fun dynamic(score: Int, name: String, crossinline init: ScoreboardLine.(UUID) -> Unit, startContent: Component = Component.empty()) {
+    inline fun dynamic(
+        score: Int,
+        name: String,
+        crossinline init: ScoreboardLine.(UUID) -> Unit,
+        startContent: Component = Component.empty()
+    ) {
         line {
             this.score = score
             this.name = name

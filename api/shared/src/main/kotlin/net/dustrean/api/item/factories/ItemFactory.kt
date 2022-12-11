@@ -16,6 +16,9 @@ inline fun item(material: Material, crossinline apply: DefaultItemFactory.() -> 
         .get(null) // null because we don't need a player for customization.
 }
 
-inline fun dynamicItem(noinline material: (UUID?) -> Material, crossinline apply: DynamicItemFactory.() -> Unit): ItemStackLike {
+inline fun dynamicItem(
+    noinline material: (UUID?) -> Material,
+    crossinline apply: DynamicItemFactory.() -> Unit
+): ItemStackLike {
     return DynamicItemFactory(material).apply(apply)
 }

@@ -1,9 +1,5 @@
 package net.dustrean.api.minestom.scoreboard
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
 import net.dustrean.api.minestom.getPlayer
 import net.dustrean.api.scoreboard.Scoreboard
 import net.dustrean.api.scoreboard.ScoreboardLine

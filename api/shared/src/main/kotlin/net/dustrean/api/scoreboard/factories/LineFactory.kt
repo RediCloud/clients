@@ -16,6 +16,7 @@ class LineFactory {
 
     fun create(): ScoreboardLine =
         ScoreboardLineImpl(name, content, score, proceed)
+
     class ScoreboardLineImpl(
         override var name: String,
         override var content: Component,
