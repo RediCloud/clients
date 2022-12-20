@@ -18,4 +18,5 @@ allprojects {
             }
         }
     }
+    (tasks.findByName("jar") as Jar?)?.duplicatesStrategy = DuplicatesStrategy.WARN
 }
