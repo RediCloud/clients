@@ -1,5 +1,5 @@
 plugins {
-    id("net.dustrean.libloader") version "1.4.0" apply false
+    id("net.dustrean.libloader") version "1.5.2" apply false
 }
 allprojects {
     afterEvaluate {
