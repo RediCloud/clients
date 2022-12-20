@@ -12,3 +12,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:${BuildConstants.minecraftVersion}-R0.1-SNAPSHOT")
     shade(project(":api:shared"))
 }
+
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.WARN
+}
