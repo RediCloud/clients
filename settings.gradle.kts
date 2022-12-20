@@ -1,7 +1,8 @@
 rootProject.name = "clients"
 
-include(":api:minestom")
 include(":api:shared")
+include(":api:minestom")
+include(":api:paper")
 include(":api:velocity")
 
 pluginManagement {
