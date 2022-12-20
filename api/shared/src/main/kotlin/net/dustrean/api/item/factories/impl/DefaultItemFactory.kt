@@ -79,6 +79,6 @@ class DefaultItemFactory(
     }
 
     override fun get(uuid: UUID?): ItemStack =
-        create().apply { register(identifier) }
+        create()
 
 }
