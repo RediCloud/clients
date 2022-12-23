@@ -15,10 +15,10 @@ import net.minestom.server.item.Material as MinestomMaterial
 
 object ItemConstants {
     val tag = Tag.UUID("item_api")
-    fun ItemStack.toMinestomItemStack(): MinestomItemStack {
+    fun ItemStack.minestom(): MinestomItemStack {
         fun ItemMeta.Builder.applyData() {
-            damage(this@toMinestomItemStack.damage)
-            unbreakable(this@toMinestomItemStack.unbreakable)
+            damage(this@minestom.damage)
+            unbreakable(this@minestom.unbreakable)
             if (blockInteract) canPlaceOn(mutableSetOf())
         }
 
@@ -30,9 +30,9 @@ object ItemConstants {
                     applyData()
                     skullOwner(skullOwner ?: UUID.randomUUID()) //required when not set, but textureURL is set
                     playerSkin(
-                        if (this@toMinestomItemStack.skullTexture != null)
+                        if (this@minestom.skullTexture != null)
                             PlayerSkin(
-                                this@toMinestomItemStack.skullTexture,
+                                this@minestom.skullTexture,
                                 ""
                             )
                         else PlayerSkin.fromUuid(skullOwner?.toString() ?: return@am)
@@ -46,7 +46,7 @@ object ItemConstants {
     }
 
     fun AbstractInventory.setItemStack(slot: Int, itemStack: ItemStack) {
-        setItemStack(slot, itemStack.toMinestomItemStack())
+        setItemStack(slot, itemStack.minestom())
     }
 
     fun Player.setItemStack(slot: Int, itemStack: ItemStackLike) {
