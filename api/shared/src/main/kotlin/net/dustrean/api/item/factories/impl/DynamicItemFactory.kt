@@ -26,6 +26,15 @@ class DynamicItemFactory(var material: (UUID?) -> Material) : ItemFactory, ItemS
     var skullOwner: (UUID?) -> UUID? = { null }
     var skullTexture: (UUID?) -> String? = { null }
     var properties: (UUID?) -> MutableMap<Any, Any> = { mutableMapOf() }
+
+    var blockAll: Boolean = false
+        set(value) {
+            blockDrop = { value }
+            blockInteract = { value }
+            blockClick = { value }
+            field = value
+        }
+
     override fun create(): ItemStackLike =
         create(null)
 
