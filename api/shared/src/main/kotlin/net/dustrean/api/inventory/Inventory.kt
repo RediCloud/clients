@@ -5,7 +5,7 @@ import net.kyori.adventure.text.Component
 import java.util.*
 
 interface Inventory {
-    var lines: Byte
+    var lines: Int
     var name: (UUID) -> Component
     var items: MutableMap<Int, ItemStackLike>
 

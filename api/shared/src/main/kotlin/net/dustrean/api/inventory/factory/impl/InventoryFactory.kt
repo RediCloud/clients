@@ -6,8 +6,8 @@ import net.dustrean.api.item.ItemStack
 import net.kyori.adventure.text.Component
 import java.util.*
 
-class InventoryFactory(override var lines: Byte, override var name: (UUID) -> Component) : Inventory {
-    constructor(lines: Byte, name: Component) : this(lines, { name })
+class InventoryFactory(override var lines: Int, override var name: (UUID) -> Component) : Inventory {
+    constructor(lines: Int, name: Component) : this(lines, { name })
 
     init {
         require(lines in 1..6) { "Inventory lines must be between 1 and 6." }
