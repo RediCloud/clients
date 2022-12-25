@@ -20,3 +20,6 @@ dependencies {
     compileOnly(project(":api:minestom"))
     compileOnly(project(":api:shared"))
 }
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
