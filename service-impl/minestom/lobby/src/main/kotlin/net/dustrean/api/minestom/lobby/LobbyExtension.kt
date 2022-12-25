@@ -1,7 +1,10 @@
 package net.dustrean.api.minestom.lobby
 
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.NonCancellable.invokeOnCompletion
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import net.dustrean.api.ICoreAPI
 import net.dustrean.api.config.IConfigManager
 import net.dustrean.api.item.enums.Material
@@ -38,12 +41,14 @@ class LobbyExtension : Extension() {
     }
 
     override fun initialize() {
-        GlobalScope.async {
-            ICoreAPI.INSTANCE.getConfigManager().getConfig<ConfigModel>("lobby")
-        }.apply {
-            invokeOnCompletion {
-                config = getCompleted()
+        config = runCatching {
+            runBlocking {
+                ICoreAPI.INSTANCE.getConfigManager().getConfig<ConfigModel>("lobby")
             }
+        }.getOrNull() ?: run {
+            val config = ConfigModel()
+            GlobalScope.launch { ICoreAPI.INSTANCE.getConfigManager().createConfig(config) }
+            config
         }
         EventRegister.apply()
 
