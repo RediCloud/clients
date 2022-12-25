@@ -51,10 +51,10 @@ class LobbyExtension : Extension() {
 
         MinecraftServer.getInstanceManager().createFallbackWorld()
 
-        val model = TestModel()
-        model.init(getWorld("fallback"), Pos(0.0, 2.0, 0.0, 0.0f, 0.0f), ModelConfig.defaultConfig)
-        val animator = AnimationHandlerImpl(model)
-        animator.playRepeat("idle")
+        //val model = TestModel()
+        //model.init(getWorld("fallback"), Pos(0.0, 2.0, 0.0, 0.0f, 0.0f), ModelConfig.defaultConfig)
+        //val animator = AnimationHandlerImpl(model)
+        //animator.playRepeat("idle")
         bootstrap.bootSuccess()
     }
 
