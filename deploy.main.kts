@@ -41,9 +41,11 @@ val services = listOf("minestom" to "lobby")
 services.forEach { (type, name) ->
     deploy(
         "service-impl/$type/$name/build/libs/$name.jar",
-        "/home/cloudnet/templates/${name.replaceFirstChar { it.uppercaseChar() }}/${
+        "/home/cloudnet/local/templates/${name.replaceFirstChar { it.uppercaseChar() }}/default/${
             if (type == "minestom") "extensions" else "plugins"
-        }/$name.jar"
+        }/$name.jar".also {
+            runCommandSync("mkdir -p ${it.substringBeforeLast("/")}")
+        }
     )
     runCommandSync("screen -S CloudNet -X stuff \"service restart ${name.replaceFirstChar { it.uppercaseChar() }}\"")
 }
