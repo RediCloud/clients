@@ -53,7 +53,7 @@ services.forEach { (type, name) ->
             if (type == "minestom") "extensions" else "plugins"
         }/$name.jar"
     )
-    runCommandSync("screen -S CloudNet -X stuff \"service restart ${name.replaceFirstChar { it.uppercaseChar() }}\"")
+    //runCommandSync("screen -S CloudNet -X stuff \"service restart ${name.replaceFirstChar { it.uppercaseChar() }}\"")
 }
 
 sftp.disconnect()
