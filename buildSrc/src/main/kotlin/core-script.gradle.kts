@@ -14,6 +14,6 @@ repositories {
 }
 afterEvaluate {
     dependencies {
-        add("compileOnly", "net.dustrean.api:api:${BuildConstants.coreVersion}")
+        add("implementation", "net.dustrean.api:api:${BuildConstants.coreVersion}")
     }
 }
