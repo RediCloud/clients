@@ -1,17 +1,12 @@
 package net.dustrean.api.minestom.lobby.events
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import net.dustrean.api.minestom.events.listenEvent
+import net.dustrean.api.minestom.getWorld
 import net.dustrean.api.minestom.item.ItemConstants.minestom
-import net.dustrean.api.minestom.item.ItemConstants.setItemStack
 import net.dustrean.api.minestom.lobby.register.ItemRegister
-import net.minestom.server.MinecraftServer
-import net.minestom.server.entity.Player
+import net.minestom.server.coordinate.Pos
+import net.minestom.server.event.player.PlayerLoginEvent
 import net.minestom.server.event.player.PlayerSpawnEvent
-import net.minestom.server.network.packet.client.play.ClientAnimationPacket
-import net.minestom.server.network.packet.server.play.EntityAnimationPacket
 
 class PlayerEvent {
 
@@ -25,6 +20,10 @@ class PlayerEvent {
                     player.inventory.setItemStack(completed.properties["index"] as Int, completed.minestom())
                 }
             }
+        }
+        listenEvent<PlayerLoginEvent> {
+            setSpawningInstance(getWorld("fallback")!!)
+            player.respawnPoint = Pos(0.0, 3.0, 0.0)
         }
     }
 }
