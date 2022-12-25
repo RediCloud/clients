@@ -42,7 +42,7 @@ class LobbyExtension : Extension() {
     }
 
     override fun initialize() {
-        Class.forName("net.dustrean.api.config.ConfigData")
+        println(Class.forName("net.dustrean.api.config.ConfigData").classLoader::class.java.name + "===" + Class.forName("net.dustrean.api.redis.codec.GsonCodec").classLoader::class.java.name)
         config = runCatching {
             runBlocking {
                 ICoreAPI.INSTANCE.getConfigManager().getConfig<ConfigModel>("lobby")
