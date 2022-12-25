@@ -2,6 +2,10 @@ package net.dustrean.api.minestom
 
 import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
+import net.minestom.server.instance.AnvilLoader
+import net.minestom.server.instance.InstanceContainer
+import net.minestom.server.instance.InstanceManager
+import net.minestom.server.instance.block.Block
 import net.minestom.server.network.packet.server.SendablePacket
 import java.util.*
 
@@ -22,3 +26,20 @@ fun Collection<Player>.sendPacket(packet: SendablePacket) = forEach {
 }
 
 fun UUID.getPlayer() = connectionManager.getPlayer(this)
+
+val worlds: MutableMap<String, InstanceContainer> = mutableMapOf()
+
+fun InstanceManager.createFallbackWorld(): InstanceContainer {
+    val instance = createInstanceContainer()
+    instance.setGenerator {
+        it.modifier().fillHeight(0, 1, Block.GRASS_BLOCK)
+    }
+    worlds["fallback"] = instance
+    return instance
+}
+
+fun InstanceManager.loadWorld(name: String) = createInstanceContainer(
+    AnvilLoader(name)
+).also { worlds[name] = it }
+
+fun getWorld(name: String) = worlds[name]
