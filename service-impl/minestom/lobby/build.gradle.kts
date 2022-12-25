@@ -12,7 +12,9 @@ repositories {
 }
 
 dependencies {
-    implementation("net.worldseed.multipart:WorldSeedEntityEngine:6.0.1")
+    implementation("net.worldseed.multipart:WorldSeedEntityEngine:6.0.1") {
+        exclude(group = "com.github.Minestom", module = "Minestom")
+    }
     compileOnly(project(":api:minestom"))
     compileOnly(project(":api:shared"))
 }
