@@ -17,6 +17,7 @@ import net.kyori.adventure.text.Component
 import net.minestom.server.MinecraftServer
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.extensions.Extension
+import net.minestom.server.extensions.ExtensionClassLoader
 import net.worldseed.multipart.ModelConfig
 import net.worldseed.multipart.animations.AnimationHandlerImpl
 
@@ -29,7 +30,14 @@ class LobbyExtension : Extension() {
         }
     }
     private lateinit var config: ConfigModel
-    init {
+
+    override fun preInitialize() {
+        println(this::class.java.classLoader::class.java.name)
+        val loader: ExtensionClassLoader
+        Bootstrap().apply(MinestomJarLoader(this).also { loader = it.loader }, loader, loader)
+    }
+
+    override fun initialize() {
         GlobalScope.async {
             ICoreAPI.INSTANCE.getConfigManager().getConfig<ConfigModel>("lobby")
         }.apply {
@@ -37,14 +45,6 @@ class LobbyExtension : Extension() {
                 config = getCompleted()
             }
         }
-    }
-
-    override fun preInitialize() {
-        println(this::class.java.classLoader::class.java.name)
-        Bootstrap().apply(MinestomJarLoader(this))
-    }
-
-    override fun initialize() {
         EventRegister.apply()
 
         MinecraftServer.getInstanceManager().createFallbackWorld()
