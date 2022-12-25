@@ -33,11 +33,12 @@ class LobbyExtension : Extension() {
         }
     }
     private lateinit var config: ConfigModel
-
+    private lateinit var bootstrap: Bootstrap
     override fun preInitialize() {
         println(this::class.java.classLoader::class.java.name)
         val loader: ExtensionClassLoader
-        Bootstrap().apply(MinestomJarLoader(this).also { loader = it.loader }, loader, loader)
+        bootstrap = Bootstrap()
+        bootstrap.apply(MinestomJarLoader(this).also { loader = it.loader }, loader, loader)
     }
 
     override fun initialize() {
@@ -58,6 +59,7 @@ class LobbyExtension : Extension() {
         model.init(getWorld("fallback"), Pos(0.0, 2.0, 0.0, 0.0f, 0.0f), ModelConfig.defaultConfig)
         val animator = AnimationHandlerImpl(model)
         animator.playRepeat("idle")
+        bootstrap.bootSuccess()
     }
 
     override fun terminate() {
