@@ -42,6 +42,7 @@ class LobbyExtension : Extension() {
     }
 
     override fun initialize() {
+        Class.forName("net.dustrean.api.config.ConfigData")
         config = runCatching {
             runBlocking {
                 ICoreAPI.INSTANCE.getConfigManager().getConfig<ConfigModel>("lobby")
