@@ -11,8 +11,10 @@ repositories {
     maven("https://reposilite.worldseed.online/public")
 }
 
+val shade by configurations
+
 dependencies {
-    implementation("net.worldseed.multipart:WorldSeedEntityEngine:6.0.1") {
+    shade("net.worldseed.multipart:WorldSeedEntityEngine:6.0.1") {
         exclude(group = "com.github.Minestom", module = "Minestom")
     }
     compileOnly(project(":api:minestom"))
