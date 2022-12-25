@@ -35,6 +35,14 @@ fun runCommandSync(it: String): String {
         return inputStream.readAllBytes().decodeToString()
     }
 }
+val apis = listOf("minestom")
+
+apis.forEach { name ->
+    deploy(
+        "api/$name/build/libs/$name.jar",
+        "/home/cloudnet/local/templates/Core/$name/application.jar"
+    )
+}
 
 val services = listOf("minestom" to "lobby")
 
@@ -43,9 +51,7 @@ services.forEach { (type, name) ->
         "service-impl/$type/$name/build/libs/$name.jar",
         "/home/cloudnet/local/templates/${name.replaceFirstChar { it.uppercaseChar() }}/default/${
             if (type == "minestom") "extensions" else "plugins"
-        }/$name.jar".also {
-            runCommandSync("mkdir -p ${it.substringBeforeLast("/")}")
-        }
+        }/$name.jar"
     )
     runCommandSync("screen -S CloudNet -X stuff \"service restart ${name.replaceFirstChar { it.uppercaseChar() }}\"")
 }
