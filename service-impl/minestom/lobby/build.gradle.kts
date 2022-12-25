@@ -19,6 +19,7 @@ dependencies {
     }
     compileOnly(project(":api:minestom"))
     compileOnly(project(":api:shared"))
+    compileOnly("org.redisson:redisson:3.18.0")
 }
 tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE

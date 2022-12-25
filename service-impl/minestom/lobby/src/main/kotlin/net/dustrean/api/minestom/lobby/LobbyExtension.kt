@@ -42,16 +42,11 @@ class LobbyExtension : Extension() {
     }
 
     override fun initialize() {
-        println(Class.forName("net.dustrean.api.config.ConfigData").classLoader::class.java.name + "===" + Class.forName("net.dustrean.api.redis.codec.GsonCodec").classLoader::class.java.name)
-        config = runCatching {
-            runBlocking {
-                ICoreAPI.INSTANCE.getConfigManager().getConfig<ConfigModel>("lobby")
-            }
-        }.getOrNull() ?: run {
-            val config = ConfigModel()
-            GlobalScope.launch { ICoreAPI.INSTANCE.getConfigManager().createConfig(config) }
-            config
-        }
+        config =
+            ICoreAPI.INSTANCE.getRedisConnection().getRedissonClient().getBucket<ConfigModel>("config:lobby")
+                .let {
+                    it.get() ?: ConfigModel().also { config -> it.setAsync(config) }
+                }
         EventRegister.apply()
 
         MinecraftServer.getInstanceManager().createFallbackWorld()
