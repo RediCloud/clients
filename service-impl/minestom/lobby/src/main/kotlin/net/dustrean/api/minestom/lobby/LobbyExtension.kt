@@ -31,14 +31,14 @@ class LobbyExtension : Extension() {
         val loader: ExtensionClassLoader
         bootstrap = Bootstrap()
         bootstrap.apply(MinestomJarLoader(this).also { loader = it.loader }, loader, loader)
+    }
 
+    override fun initialize() {
         GlobalScope.launch {
             config = if (ICoreAPI.INSTANCE.getConfigManager().exists("lobby")) ICoreAPI.INSTANCE.getConfigManager()
                 .getConfig("lobby") else ICoreAPI.INSTANCE.getConfigManager().createConfig(ConfigModel())
         }
-    }
 
-    override fun initialize() {
         EventRegister.apply()
 
         MinecraftServer.getInstanceManager().createFallbackWorld()
