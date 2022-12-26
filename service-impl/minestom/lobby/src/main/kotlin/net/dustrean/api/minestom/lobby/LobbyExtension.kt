@@ -1,5 +1,7 @@
 package net.dustrean.api.minestom.lobby
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import net.dustrean.api.ICoreAPI
 import net.dustrean.api.item.enums.Material
 import net.dustrean.api.item.factories.item
@@ -29,14 +31,14 @@ class LobbyExtension : Extension() {
         val loader: ExtensionClassLoader
         bootstrap = Bootstrap()
         bootstrap.apply(MinestomJarLoader(this).also { loader = it.loader }, loader, loader)
+
+        GlobalScope.launch {
+            config = if (ICoreAPI.INSTANCE.getConfigManager().exists("lobby")) ICoreAPI.INSTANCE.getConfigManager()
+                .getConfig("lobby") else ICoreAPI.INSTANCE.getConfigManager().createConfig(ConfigModel())
+        }
     }
 
     override fun initialize() {
-        config =
-            ICoreAPI.INSTANCE.getRedisConnection().getRedissonClient().getBucket<ConfigModel>("config:lobby")
-                .let {
-                    it.get() ?: ConfigModel().also { config -> it.setAsync(config) }
-                }
         EventRegister.apply()
 
         MinecraftServer.getInstanceManager().createFallbackWorld()
