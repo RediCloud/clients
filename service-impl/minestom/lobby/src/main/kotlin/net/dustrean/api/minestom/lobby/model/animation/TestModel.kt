@@ -6,7 +6,7 @@ import net.minestom.server.instance.Instance
 import net.worldseed.multipart.GenericModelImpl
 import net.worldseed.multipart.ModelConfig
 
-class TestModel: GenericModelImpl() {
+class TestModel : GenericModelImpl() {
     override fun getId(): String {
         return "test.bbmodel"
     }

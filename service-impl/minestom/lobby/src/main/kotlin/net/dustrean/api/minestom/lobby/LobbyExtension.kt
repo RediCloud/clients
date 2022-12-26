@@ -1,28 +1,17 @@
 package net.dustrean.api.minestom.lobby
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.NonCancellable.invokeOnCompletion
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import net.dustrean.api.ICoreAPI
-import net.dustrean.api.config.IConfigManager
 import net.dustrean.api.item.enums.Material
 import net.dustrean.api.item.factories.item
 import net.dustrean.api.minestom.boot.loader.MinestomJarLoader
 import net.dustrean.api.minestom.createFallbackWorld
-import net.dustrean.api.minestom.getWorld
 import net.dustrean.api.minestom.lobby.model.ConfigModel
-import net.dustrean.api.minestom.lobby.model.animation.TestModel
 import net.dustrean.api.minestom.lobby.register.EventRegister
 import net.dustrean.libloader.boot.Bootstrap
 import net.kyori.adventure.text.Component
 import net.minestom.server.MinecraftServer
-import net.minestom.server.coordinate.Pos
 import net.minestom.server.extensions.Extension
 import net.minestom.server.extensions.ExtensionClassLoader
-import net.worldseed.multipart.ModelConfig
-import net.worldseed.multipart.animations.AnimationHandlerImpl
 
 class LobbyExtension : Extension() {
 
@@ -32,6 +21,7 @@ class LobbyExtension : Extension() {
             blockAll = true
         }
     }
+
     private lateinit var config: ConfigModel
     private lateinit var bootstrap: Bootstrap
     override fun preInitialize() {

@@ -9,7 +9,7 @@ import net.dustrean.api.minestom.inventory.InventoryConstants.open
 import net.dustrean.api.minestom.lobby.LobbyExtension
 import net.kyori.adventure.text.Component
 
-object Navigator: ItemStackLike by dynamicItem(
+object Navigator : ItemStackLike by dynamicItem(
     {
         Material.COMPASS
     }, {

@@ -14,7 +14,7 @@ import org.bukkit.persistence.PersistentDataType
 import java.io.InputStreamReader
 import java.net.URL
 import java.nio.ByteBuffer
-import java.util.UUID
+import java.util.*
 import org.bukkit.inventory.ItemStack as BukkitItemStack
 
 object ItemConstants {

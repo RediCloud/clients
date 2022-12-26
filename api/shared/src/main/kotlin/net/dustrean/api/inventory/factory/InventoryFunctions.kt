@@ -6,16 +6,26 @@ import net.dustrean.api.inventory.factory.impl.InventoryFactory
 import net.dustrean.api.item.enums.Material
 import net.dustrean.api.item.factories.item
 import net.kyori.adventure.text.Component
-import java.util.UUID
+import java.util.*
 
-inline fun inventory(lines: Int, noinline name: ((UUID) -> Component), crossinline apply: InventoryFactory.() -> Unit): InventoryFactory {
+inline fun inventory(
+    lines: Int,
+    noinline name: ((UUID) -> Component),
+    crossinline apply: InventoryFactory.() -> Unit
+): InventoryFactory {
     return InventoryFactory(lines, name).apply(apply)
 }
+
 inline fun inventory(lines: Int, name: Component, crossinline apply: InventoryFactory.() -> Unit): InventoryFactory {
     return InventoryFactory(lines, name).apply(apply)
 }
 
-inline fun dataInventoryBorder(lines: Int, noinline name: ((UUID) -> Component), crossinline apply: DataInventoryFactory.() -> Unit, material: Material = Material.GRAY_STAINED_GLASS_PANE): DataInventoryFactory {
+inline fun dataInventoryBorder(
+    lines: Int,
+    noinline name: ((UUID) -> Component),
+    crossinline apply: DataInventoryFactory.() -> Unit,
+    material: Material = Material.GRAY_STAINED_GLASS_PANE
+): DataInventoryFactory {
     return DataInventoryFactory(InventoryFactory(lines, name).apply {
         border = item(material) {
             this.name = Component.empty()

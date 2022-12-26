@@ -1,8 +1,8 @@
 package net.dustrean.api.inventory.factory.impl
 
-import net.dustrean.api.item.ItemStackLike
 import net.dustrean.api.inventory.Inventory
 import net.dustrean.api.item.ItemStack
+import net.dustrean.api.item.ItemStackLike
 import net.kyori.adventure.text.Component
 import java.util.*
 

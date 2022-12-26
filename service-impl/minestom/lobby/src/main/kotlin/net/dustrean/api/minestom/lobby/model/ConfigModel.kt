@@ -4,6 +4,6 @@ import net.dustrean.api.config.IConfig
 
 data class ConfigModel(
     val placeholder: String = "placeholder"
-): IConfig {
+) : IConfig {
     override val key: String = "lobby"
 }
