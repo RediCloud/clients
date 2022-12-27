@@ -5,6 +5,7 @@ import kotlinx.coroutines.launch
 import net.dustrean.api.ICoreAPI
 import net.dustrean.api.item.enums.Material
 import net.dustrean.api.item.factories.item
+import net.dustrean.api.minestom.addCoreClassloader
 import net.dustrean.api.minestom.boot.loader.MinestomJarLoader
 import net.dustrean.api.minestom.createFallbackWorld
 import net.dustrean.api.minestom.lobby.model.ConfigModel
@@ -31,6 +32,7 @@ class LobbyExtension : Extension() {
         val loader: ExtensionClassLoader
         bootstrap = Bootstrap()
         bootstrap.apply(MinestomJarLoader(this).also { loader = it.loader }, loader, loader)
+        loader.addCoreClassloader()
     }
 
     override fun initialize() {

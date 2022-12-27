@@ -2,12 +2,22 @@ package net.dustrean.api.minestom
 
 import net.minestom.server.MinecraftServer
 import net.minestom.server.entity.Player
+import net.minestom.server.extensions.ExtensionClassLoader
 import net.minestom.server.instance.AnvilLoader
 import net.minestom.server.instance.InstanceContainer
 import net.minestom.server.instance.InstanceManager
 import net.minestom.server.instance.block.Block
 import net.minestom.server.network.packet.server.SendablePacket
 import java.util.*
+
+fun ExtensionClassLoader.addCoreClassloader() {
+    addChild(
+        Class.forName("net.dustrean.api.minestom.bootstrap.MinestomBootstrap")
+            .getDeclaredField("classloader").also {
+                it.isAccessible = true
+            }.get(null) as ExtensionClassLoader
+    )
+}
 
 val server = MinecraftServer.init()
 val eventHandler = MinecraftServer.getGlobalEventHandler()
