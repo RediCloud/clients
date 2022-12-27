@@ -12,11 +12,14 @@ import java.util.*
 
 fun ExtensionClassLoader.addCoreClassloader() {
     val core = extensionManager.getExtension("core")!!
-    addChild(
+    val coreClassloader =
         core::class.java.superclass.getDeclaredMethod("getExtensionClassLoader").also {
             it.isAccessible = true
         }.invoke(core) as ExtensionClassLoader
+    addChild(
+        coreClassloader
     )
+    coreClassloader.addChild(this)
 }
 
 val server = MinecraftServer.init()
