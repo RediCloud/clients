@@ -13,5 +13,5 @@ fun main() {
     VelocityProxy.enable(env("VELOCITY_SECRET"))
     OptifineSupport.enable()
     ItemEvents()
-    server.start("0.0.0.0", System.getProperty("service.bind.port").toInt())
+    server.start(System.getProperty("service.bind.host"), System.getProperty("service.bind.port").toInt())
 }
