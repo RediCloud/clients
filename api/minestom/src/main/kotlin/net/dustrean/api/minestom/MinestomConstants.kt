@@ -13,7 +13,7 @@ import java.util.*
 fun ExtensionClassLoader.addCoreClassloader() {
     val core = extensionManager.getExtension("core")!!
     addChild(
-        core::class.java.getDeclaredMethod("getExtensionClassloader").also {
+        core::class.java.getDeclaredMethod("getExtensionClassLoader").also {
             it.isAccessible = true
         }.invoke(core) as ExtensionClassLoader
     )
