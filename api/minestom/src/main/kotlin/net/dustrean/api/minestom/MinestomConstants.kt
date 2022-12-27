@@ -11,11 +11,11 @@ import net.minestom.server.network.packet.server.SendablePacket
 import java.util.*
 
 fun ExtensionClassLoader.addCoreClassloader() {
+    val core = extensionManager.getExtension("core")!!
     addChild(
-        Class.forName("net.dustrean.api.minestom.bootstrap.MinestomBootstrap")
-            .getDeclaredField("classloader").also {
-                it.isAccessible = true
-            }.get(null) as ExtensionClassLoader
+        core::class.java.getDeclaredMethod("getExtensionClassloader").also {
+            it.isAccessible = true
+        }.invoke(core) as ExtensionClassLoader
     )
 }
 
