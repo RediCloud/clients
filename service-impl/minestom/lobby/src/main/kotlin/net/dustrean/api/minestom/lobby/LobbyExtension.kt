@@ -28,16 +28,17 @@ class LobbyExtension : Extension() {
 
     private lateinit var config: ConfigModel
     private lateinit var bootstrap: Bootstrap
+    private lateinit var loader: ExtensionClassLoader
     override fun preInitialize() {
         println(this::class.java.classLoader::class.java.name)
-        val loader: ExtensionClassLoader
         bootstrap = Bootstrap()
         bootstrap.apply(MinestomJarLoader(this).also { loader = it.loader }, loader, loader)
-        (ICoreAPI.INSTANCE.getRedisConnection().getRedissonClient()
-            .config.codec as GsonCodec).classLoaders.add(loader)
+
     }
 
     override fun initialize() {
+        (ICoreAPI.INSTANCE.getRedisConnection().getRedissonClient()
+            .config.codec as GsonCodec).classLoaders.add(loader)
         GlobalScope.launch {
             config = if (ICoreAPI.INSTANCE.getConfigManager().exists("lobby")) ICoreAPI.INSTANCE.getConfigManager()
                 .getConfig("lobby") else ICoreAPI.INSTANCE.getConfigManager().createConfig(ConfigModel())
