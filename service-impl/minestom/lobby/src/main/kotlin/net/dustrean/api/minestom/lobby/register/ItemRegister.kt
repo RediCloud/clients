@@ -6,12 +6,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import net.dustrean.api.item.ItemStack
 import net.dustrean.api.item.ItemStackLike
+import net.dustrean.api.minestom.lobby.items.Navigator
 import java.util.*
 
 object ItemRegister {
     private val items: List<ItemStackLike> // static list, not changing due to own api
-        get() = listOf(
-
+        = listOf(
+            Navigator
         )
 
     private val scope = CoroutineScope(Dispatchers.IO)
