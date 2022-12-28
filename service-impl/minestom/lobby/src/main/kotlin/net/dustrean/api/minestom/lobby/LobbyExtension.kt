@@ -40,8 +40,9 @@ class LobbyExtension : Extension() {
         (ICoreAPI.INSTANCE.getRedisConnection().getRedissonClient()
             .config.codec as GsonCodec).classLoaders.add(loader)
         GlobalScope.launch {
-            config = if (ICoreAPI.INSTANCE.getConfigManager().exists("lobby")) ICoreAPI.INSTANCE.getConfigManager()
-                .getConfig("lobby") else ICoreAPI.INSTANCE.getConfigManager().createConfig(ConfigModel())
+            config = ICoreAPI.INSTANCE.getConfigManager().getConfigOrPut("lobby", ConfigModel::class.java) {
+                ConfigModel()
+            }
         }
 
         EventRegister.apply()
