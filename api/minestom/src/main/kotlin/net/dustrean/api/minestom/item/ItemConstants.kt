@@ -23,7 +23,7 @@ object ItemConstants {
         }
 
         val itemStack = MinestomItemStack.builder(
-            MinestomMaterial.fromId(material.id) ?: throw NullPointerException("Invalid Item ID")
+            MinestomMaterial.fromNamespaceId(material.name) ?: throw NullPointerException("Invalid Item ID")
         ).amount(amount).lore(lore).displayName(name).apply {
             if (material == Material.PLAYER_HEAD)
                 meta(PlayerHeadMeta.Builder().apply am@{
