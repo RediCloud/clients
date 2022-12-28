@@ -10,6 +10,7 @@ import net.dustrean.api.minestom.boot.loader.MinestomJarLoader
 import net.dustrean.api.minestom.createFallbackWorld
 import net.dustrean.api.minestom.lobby.model.ConfigModel
 import net.dustrean.api.minestom.lobby.register.EventRegister
+import net.dustrean.api.redis.codec.GsonCodec
 import net.dustrean.libloader.boot.Bootstrap
 import net.kyori.adventure.text.Component
 import net.minestom.server.MinecraftServer
@@ -32,7 +33,8 @@ class LobbyExtension : Extension() {
         val loader: ExtensionClassLoader
         bootstrap = Bootstrap()
         bootstrap.apply(MinestomJarLoader(this).also { loader = it.loader }, loader, loader)
-        loader.addCoreClassloader()
+        (ICoreAPI.INSTANCE.getRedisConnection().getRedissonClient()
+            .config.codec as GsonCodec).classLoaders.add(loader)
     }
 
     override fun initialize() {
