@@ -1,12 +1,17 @@
 package net.dustrean.api.minestom.lobby.events
 
+import net.dustrean.api.item.enums.Material
+import net.minestom.server.item.Material as MinestomMaterial
 import net.dustrean.api.minestom.events.listenEvent
 import net.dustrean.api.minestom.getWorld
 import net.dustrean.api.minestom.item.ItemConstants.minestom
+import net.dustrean.api.minestom.item.ItemConstants.setItemStack
 import net.dustrean.api.minestom.lobby.register.ItemRegister
+import net.kyori.adventure.text.Component
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.event.player.PlayerLoginEvent
 import net.minestom.server.event.player.PlayerSpawnEvent
+import net.minestom.server.item.ItemStack
 
 class PlayerEvent {
 
@@ -20,6 +25,7 @@ class PlayerEvent {
                     player.inventory.setItemStack(completed.properties["index"] as Int, completed.minestom())
                 }
             }
+            player.inventory.setItemStack(1, ItemStack.builder(MinestomMaterial.COMPASS).displayName(Component.text("E")).build())
         }
         listenEvent<PlayerLoginEvent> {
             setSpawningInstance(getWorld("fallback")!!)
