@@ -16,9 +16,6 @@ fun ExtensionClassLoader.addCoreClassloader() {
         core::class.java.superclass.getDeclaredMethod("getExtensionClassLoader").also {
             it.isAccessible = true
         }.invoke(core) as ExtensionClassLoader
-    addChild(
-        coreClassloader
-    )
     coreClassloader.addChild(this)
 }
 
