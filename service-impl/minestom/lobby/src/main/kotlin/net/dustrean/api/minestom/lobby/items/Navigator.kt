@@ -14,7 +14,7 @@ object Navigator : ItemStackLike by dynamicItem(
         Material.COMPASS
     }, {
         properties = {
-            mutableMapOf("index" to 9)
+            mutableMapOf("index" to 0)
         }
         name = { Component.text("§aNavigator") }
         lore = {
