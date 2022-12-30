@@ -1,5 +1,6 @@
 plugins {
     `kotlin-script`
+    `core-script`
     id("net.dustrean.libloader")
 }
 
