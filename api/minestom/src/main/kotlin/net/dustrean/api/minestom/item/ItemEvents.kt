@@ -18,37 +18,37 @@ class ItemEvents {
             listen<PlayerStartDiggingEvent> l@{
                 if (player.itemInMainHand.hasTag(ItemConstants.tag)) {
                     val item = Constants.items[player.itemInMainHand.getTag(ItemConstants.tag)] ?: return@l
-                    isCancelled = item.blockInteract
-                    item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.LEFT_CLICK_BLOCK))
+                    val cancel = item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.LEFT_CLICK_BLOCK))
+                    if(cancel == true || item.blockInteract) isCancelled = true
                 }
             }
             listen<PlayerUseItemEvent> l@{
                 if (itemStack.hasTag(ItemConstants.tag)) {
                     val item: ItemStack = Constants.items[itemStack.getTag(ItemConstants.tag)] ?: return@l
-                    isCancelled = item.blockInteract
-                    item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.RIGHT_CLICK_AIR))
+                    val cancel = item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.RIGHT_CLICK_AIR))
+                    if(cancel == true || item.blockInteract) isCancelled = true
                 }
             }
             listen<PlayerBlockPlaceEvent> {
                 player.inventory.getItemInHand(hand).getTag(ItemConstants.tag)?.let { tag ->
                     val item: ItemStack = Constants.items[tag] ?: return@let
-                    isCancelled = item.blockInteract
-                    item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.RIGHT_CLICK_BLOCK))
+                    val cancel = item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.RIGHT_CLICK_BLOCK))
+                    if(cancel == true || item.blockInteract) isCancelled = true
                 }
             }
             listen<ItemDropEvent> l@{
                 if (itemStack.hasTag(ItemConstants.tag)) {
                     val item: ItemStack = Constants.items[itemStack.getTag(ItemConstants.tag)] ?: return@l
-                    isCancelled = item.blockDrop
-                    item.dropHandler?.invoke(item, player.uuid)
+                    val cancel = item.dropHandler?.invoke(item, player.uuid)
+                    if(cancel == true || item.blockDrop) isCancelled = true
                 }
             }
             listen<InventoryPreClickEvent> l@{
                 mutableListOf(cursorItem, clickedItem).forEach { itemStack ->
                     if (itemStack.hasTag(ItemConstants.tag)) {
                         val item: ItemStack = Constants.items[itemStack.getTag(ItemConstants.tag)] ?: return@l
-                        isCancelled = item.blockClick
-                        item.clickHandler?.invoke(item, player.uuid)
+                        val cancel = item.clickHandler?.invoke(item, player.uuid)
+                        if(cancel == true || item.blockClick) isCancelled = true
                     }
                 }
             }
@@ -58,8 +58,8 @@ class ItemEvents {
                 ).forEach { itemStack ->
                     if (itemStack.hasTag(ItemConstants.tag)) {
                         val item: ItemStack = Constants.items[itemStack.getTag(ItemConstants.tag)] ?: return@l
-                        isCancelled = item.blockClick
-                        item.clickHandler?.invoke(item, player.uuid)
+                        val cancel = item.clickHandler?.invoke(item, player.uuid)
+                        if(cancel == true || item.blockClick) isCancelled = true
                     }
                 }
             }
@@ -79,8 +79,8 @@ class ItemEvents {
                 }
                 itemStack.getTag(ItemConstants.tag)?.let { tag ->
                     val item: ItemStack = Constants.items[tag] ?: return@l
-                    isCancelled = item.blockInteract
-                    item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.LEFT_CLICK_AIR))
+                    val cancel = item.interactHandler?.invoke(item, player.uuid, Optional.of(InteractType.LEFT_CLICK_AIR))
+                    if(cancel == true || item.blockInteract) isCancelled = true
                 }
             }
         }

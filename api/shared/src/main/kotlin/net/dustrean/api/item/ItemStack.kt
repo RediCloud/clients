@@ -2,20 +2,28 @@ package net.dustrean.api.item
 
 import net.dustrean.api.item.enums.InteractType
 import net.dustrean.api.item.enums.Material
-import net.kyori.adventure.text.Component
+import net.dustrean.api.item.enums.MaterialLike
+import net.dustrean.api.language.component.item.ItemComponentProvider
 import java.util.*
 
-/**
- * A Cross-platform Itemstack, which also makes creation and customization of items easier.
- */
 data class ItemStack(
-    var material: Material,
     /**
-     * The name of the item.
-     * When set to null, the name will be the default name of the item (mostly, will be decided by the platform)
-     * @see net.kyori.adventure.text.Component
+     * The parent of this item stack.
      */
-    var name: Component?,
+    var parent: UnassignedItemStack?,
+    /**
+     * The unique id of the player who owns this item.
+     */
+    var playerUniqueId: UUID,
+    /**
+     * The item's material.
+     */
+    var material: MaterialLike,
+    /**
+     * Language provider for the item.
+     * Provides the item's name and lore.
+     */
+    var languageProvider: ItemComponentProvider.() -> Unit,
     /**
      * The amount of the item.
      * When set to 0, the item will not exist when added to an inventory.
@@ -26,11 +34,6 @@ data class ItemStack(
      * When the item isn't damageable, this will be ignored.
      */
     var damage: Int,
-    /**
-     * The lore of the item.
-     * @see net.kyori.adventure.text.Component
-     */
-    var lore: MutableList<Component>,
     /**
      * The unbreakable state of the item.
      * When the item isn't damageable, this will be ignored.
@@ -58,15 +61,15 @@ data class ItemStack(
     /**
      * When dropped, the given function will be called, providing the current item + the users uuid.
      */
-    var dropHandler: ((ItemStack, UUID) -> Unit)?,
+    var dropHandler: ((ItemStack, UUID) -> Boolean)?,
     /**
      * When interacted with, the given function will be called, providing the current item + the users uuid.
      */
-    var interactHandler: ((ItemStack, UUID, Optional<InteractType>) -> Unit)?,
+    var interactHandler: ((ItemStack, UUID, Optional<InteractType>) -> Boolean)?,
     /**
      * When moved in an inventory, the given function will be called, providing the current item + the users uuid.
      */
-    var clickHandler: ((ItemStack, UUID) -> Unit)?,
+    var clickHandler: ((ItemStack, UUID) -> Boolean)?,
     /**
      * Defines the permission a user needs to have this item set into their inventory.
      * When set to null, this will be ignored.
@@ -94,6 +97,9 @@ data class ItemStack(
      * This is used to store custom data, which can be retrieved later.
      */
     var properties: Map<Any, Any>
-) : ItemStackLike {
-    override fun get(uuid: UUID?): ItemStack = this
+): ItemStackLike {
+    override fun get(playerUniqueId: UUID): ItemStack {
+        if (playerUniqueId == this.playerUniqueId) return this
+        return parent?.assign(playerUniqueId) ?: throw IllegalStateException("ItemStack has no parent!")
+    }
 }
