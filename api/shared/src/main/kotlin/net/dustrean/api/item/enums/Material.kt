@@ -2,7 +2,7 @@
 
 package net.dustrean.api.item.enums
 
-enum class Material(val id: Int) {
+enum class Material(val id: Int) : MaterialLike {
     AIR(0),
     STONE(1),
     GRANITE(2),
@@ -1283,5 +1283,7 @@ enum class Material(val id: Int) {
     CAVE_VINES_PLANT(1277),
     BIG_DRIPLEAF_STEM(1278),
     POTTED_AZALEA_BUSH(1279),
-    POTTED_FLOWERING_AZALEA_BUSH(1280)
+    POTTED_FLOWERING_AZALEA_BUSH(1280);
+
+    override fun getNameKey(): String = "minecraft:${name.lowercase()}"
 }
