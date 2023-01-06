@@ -1,6 +1,6 @@
 package net.dustrean.api.minestom.lobby.items
 
-import net.dustrean.api.inventory.factory.inventory
+import net.dustrean.api.gui.factory.inventory
 import net.dustrean.api.item.ItemStackLike
 import net.dustrean.api.item.enums.InteractType
 import net.dustrean.api.item.enums.Material
