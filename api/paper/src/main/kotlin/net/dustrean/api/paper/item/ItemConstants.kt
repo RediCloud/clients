@@ -1,8 +1,12 @@
 package net.dustrean.api.paper.item
 
 import com.destroystokyo.paper.profile.ProfileProperty
-import com.google.gson.JsonParser
+import kotlinx.coroutines.runBlocking
+import net.dustrean.api.ICoreAPI
 import net.dustrean.api.item.ItemStack
+import net.dustrean.api.language.component.item.ItemComponentProvider
+import net.dustrean.api.language.placeholder.PlaceholderProvider
+import net.dustrean.api.utils.fetcher.TextureFetcher
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -11,13 +15,13 @@ import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.inventory.meta.SkullMeta
 import org.bukkit.persistence.PersistentDataAdapterContext
 import org.bukkit.persistence.PersistentDataType
-import java.io.InputStreamReader
-import java.net.URL
 import java.nio.ByteBuffer
 import java.util.*
 import org.bukkit.inventory.ItemStack as BukkitItemStack
 
 object ItemConstants {
+
+    private val languageManager = ICoreAPI.INSTANCE.getLanguageManager()
     val KEY = NamespacedKey("dustrean", "item_api")
 
     class UUIDTagType : PersistentDataType<ByteArray, UUID> {
@@ -45,40 +49,47 @@ object ItemConstants {
 
     }
 
-    fun ItemStack.paper(): BukkitItemStack =
-        BukkitItemStack(
-            Material.getMaterial(
-                material.name
-            )!!, amount
+    suspend fun ItemStack.paper(): BukkitItemStack {
+        val provider = ItemComponentProvider().apply(languageProvider)
+        val placeholderProvider = PlaceholderProvider().apply(provider.placeholderProvider)
+        val player = ICoreAPI.INSTANCE.getPlayerManager().getPlayerByUUID(playerUniqueId)!!
+        val languageId = languageManager.getLanguage(player.languageId)?.id ?: languageManager.getDefaultLanguage().id
+        val component = languageManager.getItem(languageId, provider)
+
+        val displayName = languageManager.deserialize(
+            component.rawName, component.serializerType, placeholderProvider.parse(component.rawName)
+        )
+        val lore = component.rawLore.map {
+            languageManager.deserialize(
+                it, component.serializerType, placeholderProvider.parse(it)
+            )
+        }
+
+        val itemStack = BukkitItemStack(
+            Material.getMaterial(material.getName())!!, amount
         ).editMetaInstance {
             if (this is Damageable) damage = this@paper.damage
-            displayName(this@paper.name)
-            lore(this@paper.lore)
+            displayName(displayName)
+            lore(lore)
             isUnbreakable = this@paper.unbreakable
             persistentDataContainer.set(
                 KEY, UUIDTagType(), identifier
             )
             if (this is SkullMeta) {
                 val offlinePlayer = Bukkit.getOfflinePlayer(skullOwner!!)
-                if (!offlinePlayer.hasPlayedBefore())
+                if (!offlinePlayer.hasPlayedBefore()) {
+                    val textureUrl = runBlocking { TextureFetcher.fetchTexture(skullOwner!!) }
                     playerProfile = Bukkit.createProfile(skullOwner!!).also {
                         it.properties.removeIf { property -> property.name == "textures" }
                         it.properties.add(
-                            ProfileProperty(
-                                "textures",
-                                skullTexture ?: JsonParser().parse(
-                                    InputStreamReader(
-                                        URL("https://sessionserver.mojang.com/session/minecraft/profile/$skullOwner").openConnection()
-                                            .getInputStream()
-                                    )
-                                ).asJsonObject.get("properties").asJsonArray[0].asJsonObject.get("value").asString
-                            )
+                            ProfileProperty("textures", textureUrl)
                         )
                     }
-                else owningPlayer = offlinePlayer
+                } else owningPlayer = offlinePlayer
             }
         }
-
+        return itemStack
+    }
 
     inline fun BukkitItemStack.editMetaInstance(crossinline block: ItemMeta.() -> Unit): BukkitItemStack {
         itemMeta = itemMeta.apply(block)

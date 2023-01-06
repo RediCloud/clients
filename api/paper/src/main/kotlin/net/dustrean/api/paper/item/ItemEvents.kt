@@ -22,16 +22,16 @@ class ItemEvents {
             ]
         listenEvent<PlayerInteractEvent> {
             val itemStack = (item.getItemStack() ?: return@listenEvent)
-            isCancelled = itemStack.blockInteract
-            itemStack.interactHandler?.invoke(
+            val cancel = itemStack.interactHandler?.invoke(
                 itemStack, player.uniqueId, Optional.of(InteractType.valueOf(action.name))
             )
+            if(cancel == true) isCancelled = true
         }
 
         listenEvent<PlayerDropItemEvent> {
             val itemStack = (itemDrop.itemStack.getItemStack() ?: return@listenEvent)
-            isCancelled = itemStack.blockDrop
-            itemStack.dropHandler?.invoke(itemStack, player.uniqueId)
+            val cancel = itemStack.dropHandler?.invoke(itemStack, player.uniqueId)
+            if(cancel == true) isCancelled = true
         }
 
         listenEvent<InventoryClickEvent> {
@@ -40,11 +40,13 @@ class ItemEvents {
                 cursor?.getItemStack(),
                 currentItem?.getItemStack()
             )
+            var cancel = false
             itemStacks.forEach {
                 if (it.blockClick) isCancelled =
                     true // If any of the items are blocked, cancel the event, regardless of the others
-                it.clickHandler?.invoke(it, whoClicked.uniqueId)
+                if(it.clickHandler?.invoke(it, whoClicked.uniqueId) == true) cancel = true
             }
+            if(cancel) isCancelled = true
         }
 
         listenEvent<PlayerSwapHandItemsEvent> {
@@ -52,11 +54,13 @@ class ItemEvents {
                 mainHandItem?.getItemStack(),
                 offHandItem?.getItemStack()
             )
+            var cancel = false
             itemStacks.forEach {
                 if (it.blockClick) isCancelled =
                     true // If any of the items are blocked, cancel the event, regardless of the others
-                it.clickHandler?.invoke(it, player.uniqueId)
+                if(it.clickHandler?.invoke(it, player.uniqueId) == true) cancel = true
             }
+            if(cancel) isCancelled = true
         }
     }
 }
