@@ -1286,4 +1286,5 @@ enum class Material(val id: Int) : MaterialLike {
     POTTED_FLOWERING_AZALEA_BUSH(1280);
 
     override fun getNameKey(): String = "minecraft:${name.lowercase()}"
+    override fun getName(): String = this.name
 }
