@@ -1,6 +1,6 @@
 package net.dustrean.api.gui
 
-enum class InteractionModifier {
+enum class GuiInteractionModifier {
     PREVENT_ITEM_PLACE,
     PREVENT_ITEM_TAKE,
     PREVENT_ITEM_SWAP,

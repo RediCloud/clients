@@ -1,22 +1,24 @@
 package net.dustrean.api.gui.inventory
 
-import net.dustrean.api.gui.BaseGui
+import net.dustrean.api.gui.Gui
 import net.dustrean.api.item.UnassignedItemStack
 import java.util.*
 
 abstract class AbstractInventory(
     val uniqueId: UUID,
-    val parent: BaseGui
+    val parent: Gui
 ) {
 
-    abstract fun updateView()
+    val items = mutableMapOf<Int, UnassignedItemStack>()
+
+    abstract suspend fun updateView()
 
     abstract fun close()
 
-    abstract fun open()
+    abstract suspend fun open()
 
-    abstract fun updateTitle()
+    abstract suspend fun updateTitle()
 
-    abstract fun updateItem(slot: Int, itemStack: UnassignedItemStack)
+    abstract suspend fun updateItem(slot: Int, itemStack: UnassignedItemStack)
 
 }
