@@ -3,6 +3,7 @@ package net.dustrean.api.paper.item
 import net.dustrean.api.item.Constants
 import net.dustrean.api.item.ItemStack
 import net.dustrean.api.item.enums.InteractType
+import net.dustrean.api.paper.item.ItemConstants.getItemStack
 import net.dustrean.api.paper.listenEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.player.PlayerDropItemEvent
@@ -13,13 +14,6 @@ import org.bukkit.inventory.ItemStack as BukkitItemStack
 
 class ItemEvents {
     init {
-        fun BukkitItemStack?.getItemStack(): ItemStack? =
-            Constants.items[
-                this?.itemMeta?.persistentDataContainer?.get(
-                    ItemConstants.KEY,
-                    ItemConstants.UUIDTagType()
-                )
-            ]
         listenEvent<PlayerInteractEvent> {
             val itemStack = (item.getItemStack() ?: return@listenEvent)
             val cancel = itemStack.interactHandler?.invoke(

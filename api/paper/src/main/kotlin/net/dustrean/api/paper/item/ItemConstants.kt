@@ -3,6 +3,7 @@ package net.dustrean.api.paper.item
 import com.destroystokyo.paper.profile.ProfileProperty
 import kotlinx.coroutines.runBlocking
 import net.dustrean.api.ICoreAPI
+import net.dustrean.api.item.Constants
 import net.dustrean.api.item.ItemStack
 import net.dustrean.api.language.component.item.ItemComponentProvider
 import net.dustrean.api.language.placeholder.PlaceholderProvider
@@ -23,6 +24,15 @@ object ItemConstants {
 
     private val languageManager = ICoreAPI.INSTANCE.getLanguageManager()
     val KEY = NamespacedKey("dustrean", "item_api")
+
+
+    fun BukkitItemStack?.getItemStack(): ItemStack? =
+        Constants.items[
+                this?.itemMeta?.persistentDataContainer?.get(
+                    ItemConstants.KEY,
+                    ItemConstants.UUIDTagType()
+                )
+        ]
 
     class UUIDTagType : PersistentDataType<ByteArray, UUID> {
         override fun getPrimitiveType(): Class<ByteArray> {

@@ -14,8 +14,8 @@ class BaseGui(
     languageProvider: (UUID) -> InventoryComponentProvider.() -> Unit
 ) : Gui(type, rows, languageProvider){
 
-    val items = mutableMapOf<Int, UnassignedItemStack>()
-    val slotActions = mutableMapOf<Int, (UUID, ItemStack?) -> Boolean>()
+    private val items = mutableMapOf<Int, UnassignedItemStack>()
+    private val slotActions = mutableMapOf<Int, (UUID, ItemStack?) -> Boolean>()
 
     fun getItem(slot: Int) = items[slot]
     fun setItem(slot: Int, item: UnassignedItemStack) {

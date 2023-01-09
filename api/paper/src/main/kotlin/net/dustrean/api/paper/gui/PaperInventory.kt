@@ -12,9 +12,10 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
+import org.bukkit.inventory.InventoryHolder
 import java.util.*
 
-class PaperInventory(uniqueId: UUID, parent: Gui) : AbstractInventory(uniqueId, parent) {
+class PaperInventory(uniqueId: UUID, parent: Gui) : AbstractInventory(uniqueId, parent), InventoryHolder{
 
     var inventory: Inventory? = null
 
@@ -68,6 +69,11 @@ class PaperInventory(uniqueId: UUID, parent: Gui) : AbstractInventory(uniqueId, 
             provider.serializerType,
             PlaceholderProvider().apply(built.placeholderProvider).parse(provider.rawTitle)
         )
+    }
+
+    override fun getInventory(): Inventory {
+        if(inventory == null) return Bukkit.createInventory(this, 9)
+        return inventory!!
     }
 
 }
