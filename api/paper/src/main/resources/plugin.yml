@@ -1,0 +1,4 @@
+name: paper-clients
+main: net.dustrean.api.clients.paper.bootstrap.PaperBootstrap
+version: 1.0.0-SNAPSHOT
+author: Dustrean-Team

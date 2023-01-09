@@ -4,3 +4,10 @@ plugins {
     `core-script`
 }
 
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":api:shared"))
+}
