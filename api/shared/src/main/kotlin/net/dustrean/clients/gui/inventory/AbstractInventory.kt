@@ -1,7 +1,11 @@
 package net.dustrean.clients.gui.inventory
 
+import net.dustrean.api.ICoreAPI
+import net.dustrean.api.language.component.inventory.InventoryComponentProvider
+import net.dustrean.api.language.placeholder.PlaceholderProvider
 import net.dustrean.clients.gui.Gui
 import net.dustrean.clients.item.UnassignedItemStack
+import net.kyori.adventure.text.Component
 import java.util.*
 
 abstract class AbstractInventory(
@@ -20,5 +24,19 @@ abstract class AbstractInventory(
     abstract suspend fun updateTitle()
 
     abstract suspend fun updateItem(slot: Int, itemStack: UnassignedItemStack)
+
+    suspend fun getTitle(): Component {
+        val built = InventoryComponentProvider().apply(parent.languageProvider.invoke(uniqueId))
+        val player = ICoreAPI.INSTANCE.getPlayerManager().getPlayerByUUID(uniqueId)
+            ?: throw IllegalStateException("Player not found")
+        val langaugeId = ICoreAPI.INSTANCE.getLanguageManager().getLanguage(player.languageId)?.id
+            ?: ICoreAPI.INSTANCE.getLanguageManager().getDefaultLanguage().id
+        val provider = ICoreAPI.INSTANCE.getLanguageManager().getInventory(langaugeId, built)
+        return ICoreAPI.INSTANCE.getLanguageManager().deserialize(
+            provider.rawTitle,
+            provider.serializerType,
+            PlaceholderProvider().apply(built.placeholderProvider).parse(provider.rawTitle)
+        )
+    }
 
 }

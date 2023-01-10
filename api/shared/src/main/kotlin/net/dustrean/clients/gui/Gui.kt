@@ -9,6 +9,7 @@ abstract class Gui(
     val type: GuiType, val rows: Int = type.rows, val languageProvider: (UUID) -> InventoryComponentProvider.() -> Unit
 ) {
 
+    val identifier = UUID.randomUUID()
     internal val inventories = mutableMapOf<UUID, AbstractInventory>()
     val fillers = mutableListOf<GuiFiller>()
     val outSideClickAction: ((UUID, ItemStack?) -> Boolean)? = null

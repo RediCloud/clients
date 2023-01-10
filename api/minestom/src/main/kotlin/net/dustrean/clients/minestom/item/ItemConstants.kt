@@ -1,11 +1,11 @@
 package net.dustrean.clients.minestom.item
 
 import net.dustrean.api.ICoreAPI
+import net.dustrean.api.language.component.item.ItemComponentProvider
+import net.dustrean.api.language.placeholder.PlaceholderProvider
 import net.dustrean.clients.item.Constants.register
 import net.dustrean.clients.item.ItemStack
 import net.dustrean.clients.item.ItemStackLike
-import net.dustrean.api.language.component.item.ItemComponentProvider
-import net.dustrean.api.language.placeholder.PlaceholderProvider
 import net.minestom.server.entity.Player
 import net.minestom.server.entity.PlayerSkin
 import net.minestom.server.item.ItemMeta
@@ -61,6 +61,8 @@ object ItemConstants {
         register()
         return itemStack
     }
+
+    fun MinestomItemStack?.getItemStack(): ItemStack? = net.dustrean.clients.item.Constants.items[this?.getTag(tag)]
 
     suspend fun Player.setItemStack(slot: Int, itemStack: ItemStackLike) {
         inventory.setItemStack(slot, itemStack.get(uuid).minestom())

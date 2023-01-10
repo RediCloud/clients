@@ -5,7 +5,7 @@ import net.dustrean.clients.item.ItemStackLike
 import net.dustrean.clients.item.enums.InteractType
 import net.dustrean.clients.item.enums.Material
 import net.dustrean.clients.item.factories.dynamicItem
-import net.dustrean.clients.minestom.inventory.InventoryConstants.open
+import net.dustrean.clients.minestom.gui.InventoryConstants.open
 import net.dustrean.clients.minestom.lobby.LobbyExtension
 import net.kyori.adventure.text.Component
 
