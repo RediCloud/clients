@@ -6,6 +6,7 @@ plugins {
 apply(plugin = "maven-publish")
 
 version = "1.0.0-SNAPSHOT"
+group = "net.dustrean.clients"
 
 repositories {
     mavenCentral()
@@ -13,6 +14,8 @@ repositories {
 
 dependencies {
     implementation(project(":api:shared"))
+    compileOnly("net.kyori:adventure-api:${BuildConstants.adventureVersion}")
+    compileOnly("net.kyori:adventure-text-minimessage:${BuildConstants.adventureVersion}")
 }
 
 afterEvaluate {

@@ -6,6 +6,7 @@ plugins {
 apply(plugin = "maven-publish")
 
 version = "1.0.0-SNAPSHOT"
+group = "net.dustrean.clients"
 
 repositories {
     mavenCentral()
@@ -15,6 +16,8 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:${BuildConstants.minecraftVersion}-R0.1-SNAPSHOT")
     shade(project(":api:shared"))
+    compileOnly("net.kyori:adventure-api:${BuildConstants.adventureVersion}")
+    compileOnly("net.kyori:adventure-text-minimessage:${BuildConstants.adventureVersion}")
 }
 
 tasks.jar {

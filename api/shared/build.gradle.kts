@@ -8,6 +8,7 @@ apply(plugin = "net.dustrean.libloader")
 apply(plugin = "maven-publish")
 
 version = "1.0.0-SNAPSHOT"
+group = "net.dustrean.clients"
 
 val lib: Configuration by configurations.creating
 configurations.compileClasspath.get().extendsFrom(lib)

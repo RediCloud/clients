@@ -7,11 +7,12 @@ apply(plugin = "net.dustrean.libloader")
 apply(plugin = "maven-publish")
 
 version = "1.0.0-SNAPSHOT"
+group = "net.dustrean.clients"
 
 val shade by configurations
 
 the(net.dustrean.libloader.plugin.LibraryLoader.LibraryLoaderConfig::class).apply {
-    this.mainClass.set("net.dustrean.api.minestom.MinestomMainKt")
+    this.mainClass.set("net.dustrean.clients.minestom.MinestomMainKt")
 }
 
 tasks.jar {
@@ -20,6 +21,9 @@ tasks.jar {
 
 dependencies {
     shade(project(":api:shared"))
+
+    compileOnly("net.kyori:adventure-api:${BuildConstants.adventureVersion}")
+    compileOnly("net.kyori:adventure-text-minimessage:${BuildConstants.adventureVersion}")
 }
 
 afterEvaluate {
@@ -32,6 +36,7 @@ afterEvaluate {
                             .endsWith("-SNAPSHOT")
                     ) "https://repo.dustrean.net/releases" else "https://repo.dustrean.net/snapshots"
                 )
+
                 credentials {
                     username =
                         findProperty("DUSTREAN_REPO_USERNAME") as String?
