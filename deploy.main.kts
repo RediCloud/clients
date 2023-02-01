@@ -35,14 +35,19 @@ fun runCommandSync(it: String): String {
         return inputStream.readAllBytes().decodeToString()
     }
 }
-val apis = listOf("minestom")
+val apis = listOf("paper", "velocity")
 
 apis.forEach { name ->
     deploy(
         "api/$name/build/libs/$name.jar",
-        "/home/cloudnet/local/templates/Core/$name/application.jar"
+        "/home/cloudnet/local/templates/Core/$name/clients.jar"
     )
 }
+
+deploy(
+    "api/minestom/build/libs/minestom.jar",
+    "/home/cloudnet/local/templates/Core/minestom/application.jar"
+)
 
 val services = listOf("minestom" to "lobby")
 
