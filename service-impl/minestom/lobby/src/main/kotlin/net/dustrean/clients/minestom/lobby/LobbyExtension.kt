@@ -8,6 +8,7 @@ import net.dustrean.clients.minestom.boot.loader.MinestomJarLoader
 import net.dustrean.clients.minestom.createFallbackWorld
 import net.dustrean.clients.minestom.lobby.model.ConfigModel
 import net.dustrean.libloader.boot.Bootstrap
+import net.dustrean.libloader.boot.apply.impl.ClassLoaderResourceLoader
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension
 import net.minestom.server.extensions.ExtensionClassLoader
@@ -17,11 +18,13 @@ class LobbyExtension : Extension() {
     private lateinit var config: ConfigModel
     private lateinit var bootstrap: Bootstrap
     private lateinit var loader: ExtensionClassLoader
+    private val resourceClassLoader: ClassLoaderResourceLoader = ClassLoaderResourceLoader(this.javaClass.classLoader.name, this.javaClass.classLoader)
     override fun preInitialize() {
         println(this::class.java.classLoader::class.java.name)
         bootstrap = Bootstrap()
-        bootstrap.apply(MinestomJarLoader(this).also { loader = it.loader }, loader, loader)
-
+        bootstrap.apply(MinestomJarLoader(this).also {
+            loader = it.loader
+        }, loader, resourceClassLoader)
     }
 
     override fun initialize() {
