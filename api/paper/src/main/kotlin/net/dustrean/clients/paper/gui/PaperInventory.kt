@@ -1,6 +1,5 @@
 package net.dustrean.clients.paper.gui
 
-import net.dustrean.api.ICoreAPI
 import net.dustrean.clients.gui.Gui
 import net.dustrean.clients.gui.GuiType
 import net.dustrean.clients.gui.inventory.AbstractInventory
@@ -14,7 +13,7 @@ import java.util.*
 
 class PaperInventory(uniqueId: UUID, parent: Gui) : AbstractInventory(uniqueId, parent), InventoryHolder{
 
-    var inventory: Inventory? = null
+    private var inventory: Inventory? = null
 
     override suspend fun updateView() {
         updateTitle()

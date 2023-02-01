@@ -19,7 +19,7 @@ class MinestomCommand(
         setDefaultExecutor { sender, context ->
             sender !is Player && return@setDefaultExecutor
 
-            ICoreAPI.INSTANCE.getCommandManager().handleCommand(
+            ICoreAPI.INSTANCE.commandManager.handleCommand(
                 MinestomCommandActor(sender as Player),
                 this,
                 context.input.split(" ")

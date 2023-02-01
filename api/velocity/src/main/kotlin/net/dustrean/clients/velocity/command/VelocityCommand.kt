@@ -16,7 +16,7 @@ open class VelocityCommand(
         if (invocation?.source() !is Player) {
             return
         }
-        ICoreAPI.INSTANCE.getCommandManager().handleCommand(
+        ICoreAPI.INSTANCE.commandManager.handleCommand(
             VelocityCommandActor(invocation as Player),
             this,
             invocation.arguments().split(" ")
@@ -27,7 +27,7 @@ open class VelocityCommand(
         if (invocation.source() !is Player) {
             return emptyList()
         }
-        return ICoreAPI.INSTANCE.getCommandManager().handleTabComplete(
+        return ICoreAPI.INSTANCE.commandManager.handleTabComplete(
             VelocityCommandActor(invocation as Player),
             this,
             invocation.arguments()

@@ -18,7 +18,7 @@ open class PaperCommand(
         if (sender !is Player) {
             return false
         }
-        ICoreAPI.INSTANCE.getCommandManager().handleCommand(PaperCommandActor(sender), this, args.toList())
+        ICoreAPI.INSTANCE.commandManager.handleCommand(PaperCommandActor(sender), this, args.toList())
         return true
     }
 
@@ -27,7 +27,7 @@ open class PaperCommand(
             return mutableListOf()
         }
 
-        return  ICoreAPI.INSTANCE.getCommandManager().handleTabComplete(PaperCommandActor(sender), this, args.joinToString(" "))
+        return  ICoreAPI.INSTANCE.commandManager.handleTabComplete(PaperCommandActor(sender), this, args.joinToString(" "))
             .toMutableList()
     }
 
