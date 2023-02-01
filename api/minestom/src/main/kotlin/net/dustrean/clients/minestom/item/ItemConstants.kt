@@ -8,6 +8,7 @@ import net.dustrean.clients.item.ItemStack
 import net.dustrean.clients.item.ItemStackLike
 import net.minestom.server.entity.Player
 import net.minestom.server.entity.PlayerSkin
+import net.minestom.server.inventory.PlayerInventory
 import net.minestom.server.item.ItemMeta
 import net.minestom.server.item.Material
 import net.minestom.server.item.metadata.PlayerHeadMeta
@@ -18,7 +19,7 @@ import net.minestom.server.item.Material as MinestomMaterial
 
 object ItemConstants {
 
-    private val languageManager = ICoreAPI.INSTANCE.getLanguageManager()
+    private val languageManager = ICoreAPI.INSTANCE.languageManager
     val tag = Tag.UUID("item_api")
     suspend fun ItemStack.minestom(): MinestomItemStack {
         fun ItemMeta.Builder.applyData() {
@@ -29,7 +30,7 @@ object ItemConstants {
 
         val provider = ItemComponentProvider().apply(languageProvider)
         val placeholderProvider = PlaceholderProvider().apply(provider.placeholderProvider)
-        val player = ICoreAPI.INSTANCE.getPlayerManager().getPlayerByUUID(playerUniqueId)!!
+        val player = ICoreAPI.INSTANCE.playerManager.getPlayerByUUID(playerUniqueId)!!
         val languageId = languageManager.getLanguage(player.languageId)?.id ?: languageManager.getDefaultLanguage().id
         val component = languageManager.getItem(languageId, provider)
 

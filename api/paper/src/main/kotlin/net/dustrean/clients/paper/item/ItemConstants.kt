@@ -22,7 +22,7 @@ import org.bukkit.inventory.ItemStack as BukkitItemStack
 
 object ItemConstants {
 
-    private val languageManager = ICoreAPI.INSTANCE.getLanguageManager()
+    private val languageManager = ICoreAPI.INSTANCE.languageManager
     val KEY = NamespacedKey("dustrean", "item_api")
 
 
@@ -62,7 +62,7 @@ object ItemConstants {
     suspend fun ItemStack.paper(): BukkitItemStack {
         val provider = ItemComponentProvider().apply(languageProvider)
         val placeholderProvider = PlaceholderProvider().apply(provider.placeholderProvider)
-        val player = ICoreAPI.INSTANCE.getPlayerManager().getPlayerByUUID(playerUniqueId)!!
+        val player = ICoreAPI.INSTANCE.playerManager.getPlayerByUUID(playerUniqueId)!!
         val languageId = languageManager.getLanguage(player.languageId)?.id ?: languageManager.getDefaultLanguage().id
         val component = languageManager.getItem(languageId, provider)
 

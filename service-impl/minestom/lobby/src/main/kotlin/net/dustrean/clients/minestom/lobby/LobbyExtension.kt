@@ -3,26 +3,16 @@ package net.dustrean.clients.minestom.lobby
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.dustrean.api.ICoreAPI
-import net.dustrean.clients.item.enums.Material
+import net.dustrean.api.redis.codec.GsonCodec
 import net.dustrean.clients.minestom.boot.loader.MinestomJarLoader
 import net.dustrean.clients.minestom.createFallbackWorld
 import net.dustrean.clients.minestom.lobby.model.ConfigModel
-import net.dustrean.clients.minestom.lobby.register.EventRegister
-import net.dustrean.api.redis.codec.GsonCodec
 import net.dustrean.libloader.boot.Bootstrap
-import net.kyori.adventure.text.Component
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension
 import net.minestom.server.extensions.ExtensionClassLoader
 
 class LobbyExtension : Extension() {
-
-    companion object {
-        val PLACEHOLDER = item(Material.BLACK_STAINED_GLASS_PANE) {
-            name = Component.empty()
-            blockAll = true
-        }
-    }
 
     private lateinit var config: ConfigModel
     private lateinit var bootstrap: Bootstrap
@@ -35,15 +25,12 @@ class LobbyExtension : Extension() {
     }
 
     override fun initialize() {
-        (ICoreAPI.INSTANCE.getRedisConnection().getRedissonClient()
-            .config.codec as GsonCodec).classLoaders.add(loader)
+        (ICoreAPI.INSTANCE.redisConnection.getRedissonClient().config.codec as GsonCodec).classLoaders.add(loader)
         GlobalScope.launch {
-            config = ICoreAPI.INSTANCE.getConfigManager().getConfigOrPut("lobby", ConfigModel::class.java) {
+            config = ICoreAPI.INSTANCE.configManager.getConfigOrPut("lobby", ConfigModel::class.java) {
                 ConfigModel()
             }
         }
-
-        EventRegister.apply()
 
         MinecraftServer.getInstanceManager().createFallbackWorld()
 

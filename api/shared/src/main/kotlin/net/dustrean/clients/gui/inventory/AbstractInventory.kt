@@ -27,12 +27,12 @@ abstract class AbstractInventory(
 
     suspend fun getTitle(): Component {
         val built = InventoryComponentProvider().apply(parent.languageProvider.invoke(uniqueId))
-        val player = ICoreAPI.INSTANCE.getPlayerManager().getPlayerByUUID(uniqueId)
+        val player = ICoreAPI.INSTANCE.playerManager.getPlayerByUUID(uniqueId)
             ?: throw IllegalStateException("Player not found")
-        val langaugeId = ICoreAPI.INSTANCE.getLanguageManager().getLanguage(player.languageId)?.id
-            ?: ICoreAPI.INSTANCE.getLanguageManager().getDefaultLanguage().id
-        val provider = ICoreAPI.INSTANCE.getLanguageManager().getInventory(langaugeId, built)
-        return ICoreAPI.INSTANCE.getLanguageManager().deserialize(
+        val langaugeId = ICoreAPI.INSTANCE.languageManager.getLanguage(player.languageId)?.id
+            ?: ICoreAPI.INSTANCE.languageManager.getDefaultLanguage().id
+        val provider = ICoreAPI.INSTANCE.languageManager.getInventory(langaugeId, built)
+        return ICoreAPI.INSTANCE.languageManager.deserialize(
             provider.rawTitle,
             provider.serializerType,
             PlaceholderProvider().apply(built.placeholderProvider).parse(provider.rawTitle)

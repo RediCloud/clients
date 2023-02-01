@@ -1,6 +1,7 @@
 package net.dustrean.clients
 
 import net.dustrean.clients.gui.GuiProvider
+import net.dustrean.api.ICoreAPI
 
 abstract class Clients {
 
@@ -8,7 +9,7 @@ abstract class Clients {
         lateinit var INSTANCE: Clients
     }
 
-    val core = net.dustrean.api.ICoreAPI.Companion.INSTANCE
+    val core = ICoreAPI.INSTANCE
     abstract val guiProvider: GuiProvider
 
 }
