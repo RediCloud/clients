@@ -1,6 +1,6 @@
 {
-  "entrypoint": "net.dustrean.api.minestom.lobby.LobbyExtension",
-  "name": "lobby_extension",
+  "entrypoint": "net.dustrean.clients.minestom.lobby.LobbyExtension",
+  "name": "lobby",
   "version": "1.0.0",
   "dependencies": [
     "core"
