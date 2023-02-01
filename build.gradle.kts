@@ -1,5 +1,5 @@
 plugins {
-    id("net.dustrean.libloader") version "1.5.3" apply false
+    id("net.dustrean.libloader") version "1.6.2" apply false
     id("maven-publish")
 }
 allprojects {
