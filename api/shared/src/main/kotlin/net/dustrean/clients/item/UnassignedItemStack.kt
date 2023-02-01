@@ -5,7 +5,7 @@ import net.dustrean.clients.item.enums.MaterialLike
 import net.dustrean.api.language.component.item.ItemComponentProvider
 import java.util.*
 
-data class UnassignedItemStack(
+open class UnassignedItemStack(
     var material: (UUID) -> MaterialLike,
     var languageProvider: (UUID) -> ItemComponentProvider.() -> Unit,
     var amount: (UUID) -> Int = { 1 },
@@ -22,24 +22,31 @@ data class UnassignedItemStack(
     var skullTexture: (UUID) -> String? = { null },
     var properties: (UUID) -> MutableMap<Any, Any> = { mutableMapOf() }
 ) {
-    fun assign(playerUniqueId: UUID): ItemStack = ItemStack(
-        this,
-        playerUniqueId,
-        material(playerUniqueId),
-        languageProvider(playerUniqueId),
-        amount(playerUniqueId),
-        damage(playerUniqueId),
-        unbreakable(playerUniqueId),
-        blockDrop(playerUniqueId),
-        blockInteract(playerUniqueId),
-        blockClick(playerUniqueId),
-        UUID.randomUUID(),
-        dropHandler,
-        interactHandler,
-        clickHandler,
-        permission(playerUniqueId),
-        skullOwner(playerUniqueId),
-        skullTexture(playerUniqueId),
-        properties(playerUniqueId)
-    )
+
+    internal val registry = mutableMapOf<UUID, ItemStack>()
+
+    fun assign(playerUniqueId: UUID, force: Boolean = false): ItemStack {
+        if (registry.containsKey(playerUniqueId) && !force) return registry[playerUniqueId]!!
+        return ItemStack(
+            this,
+            playerUniqueId,
+            material(playerUniqueId),
+            languageProvider(playerUniqueId),
+            amount(playerUniqueId),
+            damage(playerUniqueId),
+            unbreakable(playerUniqueId),
+            blockDrop(playerUniqueId),
+            blockInteract(playerUniqueId),
+            blockClick(playerUniqueId),
+            UUID.randomUUID(),
+            dropHandler,
+            interactHandler,
+            clickHandler,
+            permission(playerUniqueId),
+            skullOwner(playerUniqueId),
+            skullTexture(playerUniqueId),
+            properties(playerUniqueId)
+        )
+    }
+
 }

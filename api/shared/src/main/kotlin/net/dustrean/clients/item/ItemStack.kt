@@ -98,6 +98,11 @@ data class ItemStack(
      */
     var properties: Map<Any, Any>
 ): ItemStackLike {
+
+    init {
+        if (parent != null) parent!!.registry[playerUniqueId] = this
+    }
+
     override fun get(playerUniqueId: UUID): ItemStack {
         if (playerUniqueId == this.playerUniqueId) return this
         return parent?.assign(playerUniqueId) ?: throw IllegalStateException("ItemStack has no parent!")
