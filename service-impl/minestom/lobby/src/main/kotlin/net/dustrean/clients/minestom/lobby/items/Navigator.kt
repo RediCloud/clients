@@ -1,37 +1,35 @@
 package net.dustrean.clients.minestom.lobby.items
 
-import net.dustrean.clients.gui.factory.inventory
-import net.dustrean.clients.item.ItemStackLike
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import net.dustrean.clients.gui.GuiType
+import net.dustrean.clients.gui.impl.BaseGui
+import net.dustrean.clients.item.UnassignedItemStack
 import net.dustrean.clients.item.enums.InteractType
 import net.dustrean.clients.item.enums.Material
-import net.dustrean.clients.item.factories.dynamicItem
-import net.dustrean.clients.minestom.gui.InventoryConstants.open
-import net.dustrean.clients.minestom.lobby.LobbyExtension
 import net.kyori.adventure.text.Component
 
-object Navigator : ItemStackLike by dynamicItem(
-    {
-        Material.COMPASS
-    }, {
-        properties = {
-            mutableMapOf("index" to 0)
-        }
-        name = { Component.text("§aNavigator") }
-        lore = {
-            mutableListOf(
+object Navigator : UnassignedItemStack(material = { Material.COMPASS },
+    properties = { mutableMapOf("index" to 0) },
+    languageProvider = {
+        {
+            name = Component.text("§aNavigator")
+            lore = mutableListOf(
                 Component.text("§7Click to open the navigator")
             )
         }
-        blockAll = true
-        interactHandler = l@{ _, uuid, type ->
-            if (type.get() != InteractType.RIGHT_CLICK_AIR && type.get() != InteractType.RIGHT_CLICK_BLOCK) return@l
-            Navigator.inv.open(
-                uuid
-            )
+    },
+    blockClick = { true },
+    blockInteract = { true },
+    blockDrop = { true },
+    interactHandler = l@{ _, uuid, type ->
+        if (type.get() != InteractType.RIGHT_CLICK_AIR && type.get() != InteractType.RIGHT_CLICK_BLOCK) return@l false
+        GlobalScope.launch { Navigator.gui.open(uuid) }
+        return@l true
+    }) {
+    private val gui = BaseGui(GuiType.CHEST, 5) {
+        {
+            title = Component.text("§aNavigator")
         }
-    }
-) {
-    private val inv = inventory(6, Component.text("§aNavigator")) {
-        border = LobbyExtension.PLACEHOLDER
     }
 }
