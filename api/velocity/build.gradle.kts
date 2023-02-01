@@ -12,6 +12,11 @@ repositories {
     mavenCentral()
 }
 
+tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.WARN
+    archiveFileName.set("${project.name}.jar")
+}
+
 dependencies {
     implementation(project(":api:shared"))
     compileOnly("net.kyori:adventure-api:${BuildConstants.adventureVersion}")

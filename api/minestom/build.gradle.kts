@@ -17,6 +17,7 @@ the(net.dustrean.libloader.plugin.LibraryLoader.LibraryLoaderConfig::class).appl
 
 tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    archiveFileName.set("${project.name}.jar")
 }
 
 dependencies {

@@ -22,6 +22,7 @@ dependencies {
 
 tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.WARN
+    archiveFileName.set("${project.name}.jar")
 }
 
 afterEvaluate {

@@ -23,4 +23,5 @@ dependencies {
 }
 tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveFileName.set("${project.name}.jar")
 }
