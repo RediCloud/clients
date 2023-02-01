@@ -40,7 +40,7 @@ val apis = listOf("paper", "velocity")
 apis.forEach { name ->
     deploy(
         "api/$name/build/libs/$name.jar",
-        "/home/cloudnet/local/templates/Core/$name/clients.jar"
+        "/home/cloudnet/local/templates/Core/$name/plugins/clients.jar"
     )
 }
 
