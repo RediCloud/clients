@@ -4,8 +4,8 @@
   "version": "1.0.0-SNAPSHOT",
   "description": "Clients plugin for the RC-Core",
   "authors": [
-    "Dustrean-Team"
+    "RediCloud-Team"
   ],
   "dependencies": [],
-  "main": "net.dustrean.clients.velocity.bootstrap.VelocityBootstrap"
+  "main": "dev.redicloud.clients.velocity.bootstrap.VelocityBootstrap"
 }

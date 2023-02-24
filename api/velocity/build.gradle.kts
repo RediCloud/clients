@@ -27,7 +27,7 @@ afterEvaluate {
     (extensions["publishing"] as PublishingExtension).apply {
         repositories {
             maven {
-                name = "dustrean"
+                name = "redicloud"
                 url = uri(
                     if (!project.version.toString()
                             .endsWith("-SNAPSHOT")
