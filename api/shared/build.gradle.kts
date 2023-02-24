@@ -40,8 +40,8 @@ afterEvaluate {
                         findProperty("REDI_CLOUD_REPO_USERNAME") as String?
                             ?: System.getenv("REDI_CLOUD_REPO_USERNAME")
                     password =
-                        findProperty("REDI_CLOUD_REPO_USERNAME") as String?
-                            ?: System.getenv("REDI_CLOUD_REPO_USERNAME")
+                        findProperty("REDI_CLOUD_REPO_PASSWORD") as String?
+                            ?: System.getenv("REDI_CLOUD_REPO_PASSWORD")
                 }
                 authentication {
                     create<BasicAuthentication>("basic")
