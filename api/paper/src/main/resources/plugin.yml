@@ -1,4 +1,5 @@
 name: paper-clients
-main: net.dustrean.clients.paper.bootstrap.PaperBootstrap
+main: dev.redicloud.clients.paper.bootstrap.PaperBootstrap
 version: 1.0.0-SNAPSHOT
-author: Dustrean-Team
+author: RediCloud-Team
+description: Clients plugin for the RC-Core

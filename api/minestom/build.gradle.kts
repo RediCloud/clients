@@ -3,16 +3,16 @@ plugins {
     `minestom-script`
     `core-script`
 }
-apply(plugin = "net.dustrean.libloader")
+apply(plugin = "dev.redicloud.libloader")
 apply(plugin = "maven-publish")
 
 version = "1.0.0-SNAPSHOT"
-group = "net.dustrean.clients"
+group = "dev.redicloud.clients"
 
 val shade by configurations
 
-the(net.dustrean.libloader.plugin.LibraryLoader.LibraryLoaderConfig::class).apply {
-    this.mainClass.set("net.dustrean.clients.minestom.MinestomMainKt")
+the(dev.redicloud.libloader.plugin.LibraryLoader.LibraryLoaderConfig::class).apply {
+    this.mainClass.set("dev.redicloud.clients.minestom.MinestomMainKt")
 }
 
 tasks.jar {
@@ -31,20 +31,20 @@ afterEvaluate {
     (extensions["publishing"] as PublishingExtension).apply {
         repositories {
             maven {
-                name = "dustrean"
+                name = "redicloud"
                 url = uri(
                     if (!project.version.toString()
                             .endsWith("-SNAPSHOT")
-                    ) "https://repo.dustrean.net/releases" else "https://repo.dustrean.net/snapshots"
+                    ) "https://repo.redicloud.dev/releases" else "https://repo.redicloud.dev/snapshots"
                 )
 
                 credentials {
                     username =
-                        findProperty("DUSTREAN_REPO_USERNAME") as String?
-                            ?: System.getenv("DUSTREAN_REPO_USERNAME")
+                        findProperty("REDI_CLOUD_REPO_USERNAME") as String?
+                            ?: System.getenv("REDI_CLOUD_REPO_USERNAME")
                     password =
-                        findProperty("DUSTREAN_REPO_PASSWORD") as String?
-                            ?: System.getenv("DUSTREAN_REPO_PASSWORD")
+                        findProperty("REDI_CLOUD_REPO_PASSWORD") as String?
+                            ?: System.getenv("REDI_CLOUD_REPO_PASSWORD")
                 }
                 authentication {
                     create<BasicAuthentication>("basic")

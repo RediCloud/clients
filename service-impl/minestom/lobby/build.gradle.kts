@@ -3,8 +3,8 @@ plugins {
     `core-script`
     `minestom-script`
 }
-apply(plugin = "net.dustrean.libloader")
-group = "net.dustrean.api.minestom"
+apply(plugin = "dev.redicloud.libloader")
+group = "dev.redicloud.api.minestom"
 
 repositories {
     maven("https://jitpack.io")

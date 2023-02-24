@@ -2,7 +2,7 @@
   "id": "velocity-clients",
   "name": "velocity-clients",
   "version": "1.0.0-SNAPSHOT",
-  "description": "Clients plugin for the Dustrean Network",
+  "description": "Clients plugin for the RC-Core",
   "authors": [
     "Dustrean-Team"
   ],

@@ -1,5 +1,5 @@
 {
-  "entrypoint": "net.dustrean.clients.minestom.lobby.LobbyExtension",
+  "entrypoint": "dev.redicloud.clients.minestom.lobby.LobbyExtension",
   "name": "lobby",
   "version": "1.0.0",
   "dependencies": [
