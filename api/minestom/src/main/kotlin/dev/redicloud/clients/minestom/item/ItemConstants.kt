@@ -3,6 +3,7 @@ package dev.redicloud.clients.minestom.item
 import dev.redicloud.api.ICoreAPI
 import dev.redicloud.api.language.component.item.ItemComponentProvider
 import dev.redicloud.api.language.placeholder.PlaceholderProvider
+import dev.redicloud.clients.item.Constants
 import dev.redicloud.clients.item.Constants.register
 import dev.redicloud.clients.item.ItemStack
 import dev.redicloud.clients.item.ItemStackLike
@@ -63,7 +64,7 @@ object ItemConstants {
         return itemStack
     }
 
-    fun MinestomItemStack?.getItemStack(): ItemStack? = dev.redicloud.clients.item.Constants.items[this?.getTag(tag)]
+    fun MinestomItemStack?.getItemStack(): ItemStack? = Constants.items[this?.getTag(tag)]
 
     suspend fun Player.setItemStack(slot: Int, itemStack: ItemStackLike) {
         inventory.setItemStack(slot, itemStack.get(uuid).minestom())
