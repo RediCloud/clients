@@ -7,7 +7,11 @@ import com.jcraft.jsch.JSch
 
 val jsch = JSch()
 jsch.addIdentity("node01-ssh-key", System.getenv("NODE01_SSH_KEY").toByteArray(), null, null)
-val session = jsch.getSession("root", "node01.hosting.suqatri.net", 22).apply {
+val session = jsch.getSession(
+    System.getenv("NODE_01_USER").toString(),
+    System.getenv("NODE_01_HOSTNAME").toString(),
+    System.getenv("NODE_01_PORT").toInt()
+).apply {
     setConfig("StrictHostKeyChecking", "no")
     connect()
 }
