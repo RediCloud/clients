@@ -19,6 +19,7 @@ dependencies {
     }
     compileOnly(project(":api:minestom"))
     compileOnly(project(":api:shared"))
+    compileOnly(project(":minestom-applications:default-application"))
     compileOnly("org.redisson:redisson:3.18.0")
 }
 tasks.jar {

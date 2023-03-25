@@ -4,11 +4,11 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import dev.redicloud.api.ICoreAPI
 import dev.redicloud.api.redis.codec.GsonCodec
-import dev.redicloud.clients.minestom.boot.loader.MinestomJarLoader
-import dev.redicloud.clients.minestom.createFallbackWorld
 import dev.redicloud.clients.minestom.lobby.model.ConfigModel
 import dev.redicloud.libloader.boot.Bootstrap
-import dev.redicloud.libloader.boot.apply.impl.ClassLoaderResourceLoader
+import dev.redicloud.libloader.boot.apply.impl.JarResourceLoader
+import dev.redicloud.minestom.application.createFallbackWorld
+import dev.redicloud.minestom.application.loader.MinestomJarLoader
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension
 import net.minestom.server.extensions.ExtensionClassLoader
@@ -18,9 +18,9 @@ class LobbyExtension : Extension() {
     private lateinit var config: ConfigModel
     private lateinit var bootstrap: Bootstrap
     private lateinit var loader: ExtensionClassLoader
-    private val resourceClassLoader: ClassLoaderResourceLoader = ClassLoaderResourceLoader(this.javaClass.classLoader.name, this.javaClass.classLoader)
+    private lateinit var resourceClassLoader: JarResourceLoader
     override fun preInitialize() {
-        println(this::class.java.classLoader::class.java.name)
+        resourceClassLoader = JarResourceLoader("lobby", origin.originalJar)
         bootstrap = Bootstrap()
         bootstrap.apply(MinestomJarLoader(this).also {
             loader = it.loader

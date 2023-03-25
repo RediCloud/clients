@@ -2,7 +2,7 @@ package dev.redicloud.clients.minestom.gui
 
 import dev.redicloud.clients.gui.GuiInteractionModifier
 import dev.redicloud.clients.gui.impl.BaseGui
-import dev.redicloud.clients.minestom.events.eventNode
+import dev.redicloud.minestom.application.events.eventNode
 import dev.redicloud.clients.minestom.item.ItemConstants.getItemStack
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.inventory.InventoryCloseEvent

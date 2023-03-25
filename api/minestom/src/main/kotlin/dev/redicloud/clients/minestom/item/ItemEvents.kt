@@ -3,8 +3,8 @@ package dev.redicloud.clients.minestom.item
 import dev.redicloud.clients.item.Constants
 import dev.redicloud.clients.item.ItemStack
 import dev.redicloud.clients.item.enums.InteractType
-import dev.redicloud.clients.minestom.events.eventNode
-import dev.redicloud.clients.minestom.events.listen
+import dev.redicloud.minestom.application.events.eventNode
+import dev.redicloud.minestom.application.events.listen
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.inventory.InventoryPreClickEvent
 import net.minestom.server.event.item.ItemDropEvent
