@@ -1,6 +1,6 @@
-package dev.redicloud.clients.minestom.events
+package dev.redicloud.minestom.application.events
 
-import dev.redicloud.clients.minestom.eventHandler
+import dev.redicloud.minestom.application.eventHandler
 import net.minestom.server.event.Event
 import net.minestom.server.event.EventFilter
 import net.minestom.server.event.EventNode

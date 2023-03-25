@@ -1,6 +1,6 @@
 package dev.redicloud.clients.minestom.scoreboard
 
-import dev.redicloud.clients.minestom.getPlayer
+import dev.redicloud.minestom.application.getPlayer
 import dev.redicloud.clients.scoreboard.Scoreboard
 import dev.redicloud.clients.scoreboard.ScoreboardLine
 import net.kyori.adventure.text.Component

@@ -1,4 +1,4 @@
-package dev.redicloud.clients.minestom.boot.loader
+package dev.redicloud.minestom.application.loader
 
 import dev.redicloud.libloader.boot.JarLoader
 import net.minestom.server.extensions.Extension

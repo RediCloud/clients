@@ -1,7 +1,7 @@
 {
   "entrypoint": "dev.redicloud.clients.minestom.lobby.LobbyExtension",
   "name": "lobby",
-  "version": "1.0.0",
+  "version": "1.0.0-SNAPSHOT",
   "dependencies": [
     "core"
   ]

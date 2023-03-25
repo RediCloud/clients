@@ -2,10 +2,10 @@ package dev.redicloud.clients.minestom.lobby.events
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import dev.redicloud.clients.minestom.events.listenEvent
-import dev.redicloud.clients.minestom.getWorld
+import dev.redicloud.minestom.application.events.listenEvent
 import dev.redicloud.clients.minestom.item.ItemConstants.setItemStack
 import dev.redicloud.clients.minestom.lobby.items.Navigator
+import dev.redicloud.minestom.application.getWorld
 import net.minestom.server.coordinate.Pos
 import net.minestom.server.event.player.PlayerLoginEvent
 import net.minestom.server.event.player.PlayerSpawnEvent

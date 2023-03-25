@@ -11,10 +11,6 @@ group = "dev.redicloud.clients"
 
 val shade by configurations
 
-the(dev.redicloud.libloader.plugin.LibraryLoader.LibraryLoaderConfig::class).apply {
-    this.mainClass.set("dev.redicloud.clients.minestom.MinestomMainKt")
-}
-
 tasks.jar {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
     archiveFileName.set("${project.name}.jar")
@@ -23,6 +19,7 @@ tasks.jar {
 dependencies {
     shade(project(":api:shared"))
 
+    compileOnly(project(":minestom-applications:default-application"))
     compileOnly("net.kyori:adventure-api:${BuildConstants.adventureVersion}")
     compileOnly("net.kyori:adventure-text-minimessage:${BuildConstants.adventureVersion}")
 }
