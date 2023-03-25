@@ -49,7 +49,7 @@ apis.forEach { name ->
 }
 
 deploy(
-    "api/minestom/build/libs/minestom.jar",
+    "minestom-applications/default-application/build/libs/application.jar",
     "/home/cloudnet/local/templates/Core/minestom/application.jar"
 )
 
