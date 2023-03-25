@@ -4,6 +4,6 @@ repositories {
 }
 afterEvaluate {
     dependencies {
-        add("implementation", "dev.redicloud.api:api:${BuildConstants.coreVersion}")
+        add("compileOnly", "dev.redicloud.api:api:${BuildConstants.coreVersion}")
     }
 }

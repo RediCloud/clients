@@ -2,6 +2,7 @@ plugins {
     `kotlin-script`
     `velocity-script`
     `core-script`
+    id("dev.redicloud.libloader")
 }
 apply(plugin = "maven-publish")
 
@@ -18,7 +19,7 @@ tasks.jar {
 }
 
 dependencies {
-    implementation(project(":api:shared"))
+    shade(project(":api:shared"))
     compileOnly("net.kyori:adventure-api:${BuildConstants.adventureVersion}")
     compileOnly("net.kyori:adventure-text-minimessage:${BuildConstants.adventureVersion}")
 }

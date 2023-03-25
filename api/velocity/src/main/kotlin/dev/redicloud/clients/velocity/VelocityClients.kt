@@ -4,6 +4,10 @@ import dev.redicloud.clients.Clients
 
 class VelocityClients() : Clients() {
 
+    init {
+        INSTANCE = this
+    }
+
     override val guiProvider = null!!
 
 }
