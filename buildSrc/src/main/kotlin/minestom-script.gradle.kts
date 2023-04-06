@@ -7,5 +7,5 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.Minestom.Minestom:Minestom:-SNAPSHOT")
+    implementation("com.github.Minestom.Minestom:Minestom:4f3c35ee87")
 }
