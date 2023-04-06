@@ -21,8 +21,8 @@ repositories {
 }
 
 dependencies {
-    lib("net.kyori:adventure-api:${BuildConstants.adventureVersion}")
-    lib("net.kyori:adventure-text-minimessage:${BuildConstants.adventureVersion}")
+    compileOnly("net.kyori:adventure-api:${BuildConstants.adventureVersion}")
+    compileOnly("net.kyori:adventure-text-minimessage:${BuildConstants.adventureVersion}")
 }
 
 afterEvaluate {

@@ -12,6 +12,6 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:${BuildConstants.minecraftVersion}-R0.1-SNAPSHOT")
     library(kotlin("stdlib"))
 
-    implementation("net.kyori:adventure-api:${BuildConstants.adventureVersion}")
-    implementation("net.kyori:adventure-text-minimessage:${BuildConstants.adventureVersion}")
+    compileOnly("net.kyori:adventure-api:${BuildConstants.adventureVersion}")
+    compileOnly("net.kyori:adventure-text-minimessage:${BuildConstants.adventureVersion}")
 }
