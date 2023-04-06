@@ -8,6 +8,7 @@ import dev.redicloud.clients.minestom.item.ItemEvents
 class MinestomClients : Clients() {
 
     init {
+        INSTANCE = this
         ItemEvents()
         MinestomInventoryEvents()
     }
