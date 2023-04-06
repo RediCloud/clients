@@ -9,9 +9,11 @@ import dev.redicloud.libloader.boot.Bootstrap
 import dev.redicloud.libloader.boot.apply.impl.JarResourceLoader
 import dev.redicloud.minestom.application.createFallbackWorld
 import dev.redicloud.minestom.application.loader.MinestomJarLoader
+import dev.redicloud.clients.minestom.lobby.events.PlayerEvent
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension
 import net.minestom.server.extensions.ExtensionClassLoader
+
 
 class LobbyExtension : Extension() {
 
@@ -29,6 +31,7 @@ class LobbyExtension : Extension() {
 
     override fun initialize() {
         (ICoreAPI.INSTANCE.redisConnection.getRedissonClient().config.codec as GsonCodec).classLoaders.add(loader)
+        bootstrap.bootSuccess()
         GlobalScope.launch {
             config = ICoreAPI.INSTANCE.configManager.getConfigOrPut("lobby", ConfigModel::class.java) {
                 ConfigModel()
@@ -36,12 +39,12 @@ class LobbyExtension : Extension() {
         }
 
         MinecraftServer.getInstanceManager().createFallbackWorld()
+        PlayerEvent()
 
         //val model = TestModel()
         //model.init(getWorld("fallback"), Pos(0.0, 2.0, 0.0, 0.0f, 0.0f), ModelConfig.defaultConfig)
         //val animator = AnimationHandlerImpl(model)
         //animator.playRepeat("idle")
-        bootstrap.bootSuccess()
     }
 
     override fun terminate() {
