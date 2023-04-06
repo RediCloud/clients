@@ -16,9 +16,10 @@ class MinestomInventoryEvents {
     init {
         eventNode("gui_events", EventFilter.INVENTORY) {
             addListener(InventoryPreClickEvent::class.java) {
-                if (it.inventory?.hasTag(MinestomGuiProvider.TAG) == false) return@addListener
+                if (it.inventory == null) return@addListener
+                if (!it.inventory!!.hasTag(MinestomGuiProvider.TAG)) return@addListener
                 val identifier = it.inventory!!.getTag(MinestomGuiProvider.TAG)!!
-                val gui = MinestomGuiProvider.GUIS[UUID.fromString(identifier)] ?: return@addListener
+                val gui = MinestomGuiProvider.GUIS[UUID.fromString(identifier.split("_")[1])] ?: return@addListener
 
                 val item = it.clickedItem
                 val itemStack = it.clickedItem.getItemStack() ?: return@addListener
@@ -34,23 +35,26 @@ class MinestomInventoryEvents {
                 if (gui.interactionModifiers.contains(GuiInteractionModifier.PREVENT_ITEM_SWAP)) it.isCancelled = true
             }
             addListener(PlayerInventoryItemChangeEvent::class.java) {
-                if (it.inventory?.hasTag(MinestomGuiProvider.TAG) == false) return@addListener
+                if (it.inventory == null) return@addListener
+                if (!it.inventory!!.hasTag(MinestomGuiProvider.TAG)) return@addListener
                 val identifier = it.inventory!!.getTag(MinestomGuiProvider.TAG)!!
-                val gui = MinestomGuiProvider.GUIS[UUID.fromString(identifier)] ?: return@addListener
+                val gui = MinestomGuiProvider.GUIS[UUID.fromString(identifier.split("_")[1])] ?: return@addListener
 
                 gui.dragAction?.invoke(it.player.uuid, it.newItem.getItemStack())
             }
             addListener(InventoryCloseEvent::class.java) {
-                if (it.inventory?.hasTag(MinestomGuiProvider.TAG) == false) return@addListener
+                if (it.inventory == null) return@addListener
+                if (!it.inventory!!.hasTag(MinestomGuiProvider.TAG)) return@addListener
                 val identifier = it.inventory!!.getTag(MinestomGuiProvider.TAG)!!
-                val gui = MinestomGuiProvider.GUIS[UUID.fromString(identifier)] ?: return@addListener
+                val gui = MinestomGuiProvider.GUIS[UUID.fromString(identifier.split("_")[1])] ?: return@addListener
 
                 gui.closeAction?.invoke(it.player.uuid)
             }
             addListener(InventoryOpenEvent::class.java) {
-                if (it.inventory?.hasTag(MinestomGuiProvider.TAG) == false) return@addListener
+                if (it.inventory == null) return@addListener
+                if (!it.inventory!!.hasTag(MinestomGuiProvider.TAG)) return@addListener
                 val identifier = it.inventory!!.getTag(MinestomGuiProvider.TAG)!!
-                val gui = MinestomGuiProvider.GUIS[UUID.fromString(identifier)] ?: return@addListener
+                val gui = MinestomGuiProvider.GUIS[UUID.fromString(identifier.split("_")[1])] ?: return@addListener
                 gui.openAction?.invoke(it.player.uuid)
             }
         }

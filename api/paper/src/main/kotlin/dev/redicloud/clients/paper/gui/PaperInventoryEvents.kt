@@ -3,6 +3,7 @@ package dev.redicloud.clients.paper.gui
 import dev.redicloud.clients.gui.Gui
 import dev.redicloud.clients.gui.GuiInteractionModifier
 import dev.redicloud.clients.gui.impl.BaseGui
+import dev.redicloud.clients.paper.item.ItemConstants.KEY
 import dev.redicloud.clients.paper.item.ItemConstants.getItemStack
 import dev.redicloud.clients.paper.listenEvent
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -20,8 +21,10 @@ class PaperInventoryEvents {
             val paperInventory = inventory.holder as PaperInventory
             val gui = paperInventory.parent
 
-            val item = currentItem
+            val item = currentItem ?: return@listenEvent
+            if (!item.itemMeta.persistentDataContainer.has(KEY)) return@listenEvent
             val itemStack = item.getItemStack()
+
 
             gui.outSideClickAction?.invoke(whoClicked.uniqueId, itemStack)
 
@@ -36,9 +39,12 @@ class PaperInventoryEvents {
         }
         listenEvent<InventoryDragEvent> {
             if (inventory.holder !is Gui) return@listenEvent
+            if (cursor == null) return@listenEvent
+            if (!cursor!!.itemMeta.persistentDataContainer.has(KEY)) return@listenEvent
 
             val paperInventory = inventory.holder as PaperInventory
             val gui = paperInventory.parent
+
 
             gui.dragAction?.invoke(whoClicked.uniqueId, cursor.getItemStack())
         }

@@ -11,7 +11,7 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import java.util.*
 
-class PaperInventory(uniqueId: UUID, parent: Gui) : AbstractInventory(uniqueId, parent), InventoryHolder{
+class PaperInventory(uniqueId: UUID, parent: Gui) : AbstractInventory(uniqueId, parent), InventoryHolder {
 
     private var inventory: Inventory? = null
 
@@ -32,6 +32,9 @@ class PaperInventory(uniqueId: UUID, parent: Gui) : AbstractInventory(uniqueId, 
         } else {
             Bukkit.createInventory(null, InventoryType.valueOf(parent.type.name), getTitle())
         }
+        items.forEach { (slot, itemStack) ->
+            inventory!!.setItem(slot, itemStack.assign(uniqueId).paper())
+        }
         player.openInventory(inventory!!)
     }
 
@@ -50,11 +53,14 @@ class PaperInventory(uniqueId: UUID, parent: Gui) : AbstractInventory(uniqueId, 
     }
 
     override suspend fun updateItem(slot: Int, itemStack: UnassignedItemStack) {
+        inventory?.clear()
+        items.forEach { (slot, itemStack) ->
+            inventory?.setItem(slot, itemStack.assign(uniqueId).paper()) }
         inventory?.setItem(slot, itemStack.assign(uniqueId).paper())
     }
 
     override fun getInventory(): Inventory {
-        if(inventory == null) return Bukkit.createInventory(this, 9)
+        if (inventory == null) return Bukkit.createInventory(this, 9)
         return inventory!!
     }
 

@@ -36,6 +36,9 @@ class BaseGui(
     suspend fun open(uniqueID: UUID) {
         val inventory = Clients.INSTANCE.guiProvider.createInventory(uniqueID, this)
         inventories[uniqueID] = inventory
+        items.forEach { (slot, unassignedItemStack) ->
+            inventory.items[slot] = unassignedItemStack
+        }
         inventory.open()
     }
 
