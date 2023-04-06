@@ -1,5 +1,5 @@
 plugins {
-    id("dev.redicloud.libloader") version "1.6.2" apply false
+    id("dev.redicloud.libloader") version "1.6.3" apply false
     id("maven-publish")
 }
 allprojects {
