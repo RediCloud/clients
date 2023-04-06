@@ -10,6 +10,7 @@ import dev.redicloud.libloader.boot.apply.impl.JarResourceLoader
 import dev.redicloud.minestom.application.createFallbackWorld
 import dev.redicloud.minestom.application.loader.MinestomJarLoader
 import dev.redicloud.clients.minestom.lobby.events.PlayerEvent
+import dev.redicloud.minestom.application.addExtensionClassLoader
 import net.minestom.server.MinecraftServer
 import net.minestom.server.extensions.Extension
 import net.minestom.server.extensions.ExtensionClassLoader
@@ -22,6 +23,7 @@ class LobbyExtension : Extension() {
     private lateinit var loader: ExtensionClassLoader
     private lateinit var resourceClassLoader: JarResourceLoader
     override fun preInitialize() {
+        addExtensionClassLoader("lobby", "clients")
         resourceClassLoader = JarResourceLoader("lobby", origin.originalJar)
         bootstrap = Bootstrap()
         bootstrap.apply(MinestomJarLoader(this).also {

@@ -44,3 +44,11 @@ fun InstanceManager.loadWorld(name: String) = createInstanceContainer(
 ).also { worlds[name] = it }
 
 fun getWorld(name: String) = worlds[name]
+
+fun addExtensionClassLoader(extensionName: String, targetExtensionName: String) {
+    val extension = extensionManager.getExtension(extensionName)!!
+    val extensionClassloader = extension.origin.classLoader
+    val targetExtension = extensionManager.getExtension(targetExtensionName)!!
+    val targetExtensionClassloader = targetExtension.origin.classLoader
+    targetExtensionClassloader.addChild(extensionClassloader)
+}

@@ -3,6 +3,7 @@ package dev.redicloud.clients.minestom.bootstrap
 import dev.redicloud.clients.minestom.MinestomClients
 import dev.redicloud.libloader.boot.Bootstrap
 import dev.redicloud.libloader.boot.apply.impl.JarResourceLoader
+import dev.redicloud.minestom.application.addExtensionClassLoader
 import net.minestom.server.extensions.Extension
 import net.minestom.server.extensions.ExtensionClassLoader
 
@@ -12,9 +13,10 @@ class MinestomClientsBootstrap : Extension() {
 
     override fun preInitialize() {
         classLoader = this.javaClass.classLoader as ExtensionClassLoader
+        addExtensionClassLoader("clients", "core")
         Bootstrap().apply({
             classLoader.addURL(it)
-        }, classLoader, JarResourceLoader("core-minestom_api", origin.originalJar))
+        }, classLoader, JarResourceLoader("clients-minestom", origin.originalJar))
     }
 
     override fun initialize() {
