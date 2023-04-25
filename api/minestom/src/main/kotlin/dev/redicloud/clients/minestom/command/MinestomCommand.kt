@@ -6,7 +6,7 @@ import dev.redicloud.api.command.data.CommandData
 import net.minestom.server.entity.Player
 import net.minestom.server.command.builder.Command as MinestomCommand
 
-class MinestomCommand(
+open class MinestomCommand(
     override val commandName: String,
     override val commandAliases: Array<String>,
     override val commandDescription: String,
