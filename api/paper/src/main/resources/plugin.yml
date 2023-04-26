@@ -1,5 +1,5 @@
 name: paper-clients
-main: dev.redicloud.clients.paper.bootstrap.PaperBootstrap
+main: dev.redicloud.clients.paper.bootstrap.PaperBootstrapPlugin
 version: 1.0.0-SNAPSHOT
 author: RediCloud-Team
 description: Clients plugin for the RC-Core
