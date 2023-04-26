@@ -39,7 +39,7 @@ fun runCommandSync(it: String): String {
         return inputStream.readAllBytes().decodeToString()
     }
 }
-val apis = listOf("paper", "velocity")
+val apis = listOf("paper", "velocity", "minestom")
 
 apis.forEach { name ->
     deploy(
