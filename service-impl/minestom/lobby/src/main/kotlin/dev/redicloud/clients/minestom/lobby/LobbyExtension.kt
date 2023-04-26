@@ -23,7 +23,6 @@ class LobbyExtension : Extension() {
     private lateinit var loader: ExtensionClassLoader
     private lateinit var resourceClassLoader: JarResourceLoader
     override fun preInitialize() {
-        addExtensionClassLoader("lobby", "clients")
         resourceClassLoader = JarResourceLoader("lobby", origin.originalJar)
         bootstrap = Bootstrap()
         bootstrap.apply(MinestomJarLoader(this).also {
