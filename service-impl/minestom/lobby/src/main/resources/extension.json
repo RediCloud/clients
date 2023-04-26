@@ -3,6 +3,6 @@
   "name": "lobby",
   "version": "1.0.0-SNAPSHOT",
   "dependencies": [
-    "core"
+    "clients"
   ]
 }
