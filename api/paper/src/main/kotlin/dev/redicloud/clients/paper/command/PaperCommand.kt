@@ -16,6 +16,7 @@ open class PaperCommand(
 
     override fun execute(sender: CommandSender, commandLabel: String, args: Array<out String>): Boolean {
         if (sender !is Player) {
+            sender.sendMessage("You must be a player to execute this command")
             return false
         }
         ICoreAPI.INSTANCE.commandManager.handleCommand(PaperCommandActor(sender), this, args.toList())
@@ -30,6 +31,8 @@ open class PaperCommand(
         return  ICoreAPI.INSTANCE.commandManager.handleTabComplete(PaperCommandActor(sender), this, args.joinToString(" "))
             .toMutableList()
     }
+
+    override fun loadedSubCommands() {}
 
     override val commands = arrayListOf<CommandData>()
 

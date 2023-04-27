@@ -4,6 +4,7 @@ import com.velocitypowered.api.command.RawCommand
 import com.velocitypowered.api.proxy.Player
 import dev.redicloud.api.ICoreAPI
 import dev.redicloud.api.command.Command
+import net.kyori.adventure.text.Component
 
 open class VelocityCommand(
     name: String,
@@ -14,6 +15,7 @@ open class VelocityCommand(
 
     override fun execute(invocation: RawCommand.Invocation?) {
         if (invocation?.source() !is Player) {
+            invocation?.source()?.sendMessage(Component.text("You must be a player to execute this command!"))
             return
         }
         ICoreAPI.INSTANCE.commandManager.handleCommand(
@@ -33,5 +35,7 @@ open class VelocityCommand(
             invocation.arguments()
         )
     }
+
+    override fun loadedSubCommands() {}
 
 }

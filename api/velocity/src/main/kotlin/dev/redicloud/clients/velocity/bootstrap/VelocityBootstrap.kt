@@ -7,6 +7,8 @@ import com.velocitypowered.api.plugin.Dependency
 import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.proxy.ProxyServer
 import dev.redicloud.clients.velocity.VelocityClients
+import dev.redicloud.clients.velocity.plugin
+import dev.redicloud.clients.velocity.proxy
 import dev.redicloud.libloader.boot.Bootstrap
 import dev.redicloud.libloader.boot.loaders.URLClassLoaderJarLoader
 import java.io.IOException
@@ -28,6 +30,8 @@ class VelocityBootstrap @Inject constructor(private var proxyServer: ProxyServer
 
     @Subscribe
     fun onProxyInitialization(event: ProxyInitializeEvent) {
+        proxy = proxyServer
+        plugin = proxyServer.pluginManager.getPlugin("velocity-clients").get()
         VelocityClients()
     }
 
