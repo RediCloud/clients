@@ -39,12 +39,20 @@ fun runCommandSync(it: String): String {
         return inputStream.readAllBytes().decodeToString()
     }
 }
+
+fun pluginsDirName(type: String) = when (type) {
+    "paper" -> "plugins"
+    "velocity" -> "plugins"
+    "minestom" -> "extensions"
+    else -> throw IllegalArgumentException("Unknown plattform type: $type")
+}
+
 val apis = listOf("paper", "velocity", "minestom")
 
 apis.forEach { name ->
     deploy(
         "api/$name/build/libs/$name.jar",
-        "/home/cloudnet/local/templates/Core/$name/plugins/clients.jar"
+        "/home/cloudnet/local/templates/Core/$name/${pluginsDirName(name)}/clients.jar"
     )
 }
 
@@ -58,9 +66,7 @@ val services = listOf("minestom" to "lobby")
 services.forEach { (type, name) ->
     deploy(
         "service-impl/$type/$name/build/libs/$name.jar",
-        "/home/cloudnet/local/templates/${name.replaceFirstChar { it.uppercaseChar() }}/default/${
-            if (type == "minestom") "extensions" else "plugins"
-        }/$name.jar"
+        "/home/cloudnet/local/templates/${name.replaceFirstChar { it.uppercaseChar() }}/default/${pluginsDirName(type)}/$name.jar"
     )
     //runCommandSync("screen -S CloudNet -X stuff \"service restart ${name.replaceFirstChar { it.uppercaseChar() }}\"")
 }
